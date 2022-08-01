@@ -1,0 +1,21 @@
+.content {
+  display: flex;
+  min-height: calc(100vh - 4rem);
+}
+
+.nav {
+  width: 16rem;
+  border-right: 1px solid #eceff1;
+}
+
+.main {
+  width: calc(100% - 16rem);
+  background-color: #fff;
+  padding-top: 2rem;
+}
+
+.bookList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 256px);
+  gap: 2rem;
+}
