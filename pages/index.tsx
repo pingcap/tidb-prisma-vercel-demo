@@ -35,17 +35,17 @@ export default function Home() {
   const onGetStatus = useCallback(getApiCallback(''), [])
   const onSeed = useCallback(getApiCallback('seed'), [])
   const onGetUsers = useCallback(getApiCallback('users'), [])
-  const onGetPosts = useCallback(getApiCallback('posts'), [])
+  const onGetBooks = useCallback(getApiCallback('books'), [])
 
   return (
     <div className={styles.container}>
       <Head>
-        <title>Prisma example with Vercel</title>
+        <title>TiDB example with Prisma and Vercel</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Prisma Vercel Deployment Example</h1>
+        <h1 className={styles.title}>TiDB example with Prisma and Vercel</h1>
 
         <div className={styles.grid}>
           <button onClick={onGetStatus} className={styles.apiButton}>
@@ -57,8 +57,8 @@ export default function Home() {
           <button onClick={onGetUsers} className={styles.apiButton}>
             Load users with profiles
           </button>
-          <button onClick={onGetPosts} className={styles.apiButton}>
-            Load posts
+          <button onClick={onGetBooks} className={styles.apiButton}>
+            Load books
           </button>
           <div
             className={`${styles.loader} ${isLoadingPost ? '' : styles.hidden}`}
@@ -75,6 +75,8 @@ export default function Home() {
 
       <footer className={styles.footer}>
         Powered by{' '}
+        <img src="/tidb-cloud-logo.png" alt="TiDB Cloud Logo" className={styles.logo} />
+        &
         <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
         &
         <img src="/prisma.svg" alt="Prisma Logo" className={styles.logo} />

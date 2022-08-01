@@ -1,33 +1,73 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
-model Post {
-  id       Int     @id @default(autoincrement())
-  content  String?
-  title    String
-  authorId Int?
-  author   User?   @relation(fields: [authorId], references: [id])
+model authors {
+  id         BigInt   @id
+  name       String   @db.VarChar(100)
+  gender     Boolean?
+  birth_year Int?     @db.SmallInt
+  death_year Int?     @db.SmallInt
 }
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  userId Int
-  user   User    @relation(fields: [userId], references: [id])
+model book_authors {
+  book_id   BigInt
+  author_id BigInt
+
+  @@id([book_id, author_id])
 }
 
-model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  name     String?
-  posts    Post[]
-  profiles Profile[]
+model books {
+  id           BigInt     @id
+  title        String     @db.VarChar(100)
+  type         books_type
+  published_at DateTime   @db.DateTime(0)
+  stock        Int?       @default(0)
+  price        Decimal?   @default(0.0) @db.Decimal(15, 2)
+}
+
+model orders {
+  id         BigInt   @id
+  book_id    BigInt
+  user_id    BigInt
+  quality    Int      @db.TinyInt
+  ordered_at DateTime @default(now()) @db.DateTime(0)
+
+  @@index([book_id])
+}
+
+model ratings {
+  book_id  BigInt
+  user_id  BigInt
+  score    Int      @db.TinyInt
+  rated_at DateTime @default(now()) @db.DateTime(0)
+
+  @@id([book_id, user_id])
+  @@unique([book_id, user_id], map: "uniq_book_user_idx")
+}
+
+model users {
+  id       BigInt   @id
+  balance  Decimal? @default(0.0) @db.Decimal(15, 2)
+  nickname String   @unique(map: "nickname") @db.VarChar(100)
+}
+
+enum books_type {
+  Magazine
+  Novel
+  Life
+  Arts
+  Comics
+  Education___Reference        @map("Education & Reference")
+  Humanities___Social_Sciences @map("Humanities & Social Sciences")
+  Science___Technology         @map("Science & Technology")
+  Kids
+  Sports
 }
