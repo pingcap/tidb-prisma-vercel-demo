@@ -3,71 +3,109 @@ generator client {
   previewFeatures = ["referentialIntegrity"]
 }
 
+// TiDB is highly compatible with the MySQL 5.7 protocol and the common features 
+// and syntax of MySQL 5.7.
+//
+// TiDB currently does not support foreign key constraints. If you need to use the feature of 
+// referential integrity, you can use the application layer implementation of prisma.
+//
+// Refercene: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/referential-integrity#handling-the-referential-integrity-in-prisma
+// Related Issue [WIP]: https://github.com/pingcap/tidb/issues/18209
+// 
+// More descriptions about MySQL compatibility:
+// Refercene: https://docs.pingcap.com/tidb/dev/mysql-compatibility
+
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
-model authors {
-  id         BigInt   @id
-  name       String   @db.VarChar(100)
-  gender     Boolean?
-  birth_year Int?     @db.SmallInt
-  death_year Int?     @db.SmallInt
+// 
+// https://www.prisma.io/docs/concepts/components/prisma-schema/data-model
+
+model Author {
+  id          BigInt   @id
+  name        String   @db.VarChar(100)
+  gender      Boolean?
+  birthYear   Int?     @db.SmallInt @map("birth_year")
+  deathYear   Int?     @db.SmallInt @map("death_year")
+  books       BookAuthor[]
+	@@map("authors")
 }
 
-model book_authors {
-  book_id   BigInt
-  author_id BigInt
+model BookAuthor {
+  book     Book   @relation(fields: [bookId], references: [id])
+  bookId   BigInt @map("book_id")
+  author   Author @relation(fields: [authorId], references: [id])
+  authorId BigInt @map("author_id")
 
-  @@id([book_id, author_id])
+  @@id([bookId, authorId])
+	@@map("book_authors")
 }
 
-model books {
+model Book {
   id           BigInt     @id
   title        String     @db.VarChar(100)
-  type         books_type
-  published_at DateTime   @db.DateTime(0)
+  type         BookType
+  publishedAt  DateTime   @db.DateTime(0) @map("published_at")
   stock        Int?       @default(0)
   price        Decimal?   @default(0.0) @db.Decimal(15, 2)
+  authors      BookAuthor[]
+  ratings      Rating[]
+  orders       Order[]
+	@@map("books")
 }
 
-model orders {
-  id         BigInt   @id
-  book_id    BigInt
-  user_id    BigInt
-  quality    Int      @db.TinyInt
-  ordered_at DateTime @default(now()) @db.DateTime(0)
+model Order {
+  id          BigInt   @id
+  book        Book     @relation(fields: [bookId], references: [id])
+  bookId      BigInt   @map("book_id")
+  user        User     @relation(fields: [userId], references: [id])
+  userId      BigInt   @map("user_id")
+  quality     Int      @db.TinyInt
+  orderedAt   DateTime @default(now()) @db.DateTime(0) @map("ordered_at")
 
-  @@index([book_id])
+  @@index([bookId])
+	@@map("orders")
 }
 
-model ratings {
-  book_id  BigInt
-  user_id  BigInt
-  score    Int      @db.TinyInt
-  rated_at DateTime @default(now()) @db.DateTime(0)
+model Rating {
+  book    Book     @relation(fields: [bookId], references: [id])
+  bookId  BigInt   @map("book_id")
+  user    User     @relation(fields: [userId], references: [id])
+  userId  BigInt   @map("user_id")
+  score   Int      @db.TinyInt
+  ratedAt DateTime @default(now()) @db.DateTime(0) @map("rated_at")
 
-  @@id([book_id, user_id])
-  @@unique([book_id, user_id], map: "uniq_book_user_idx")
+  @@id([bookId, userId])
+  @@unique([bookId, userId], map: "uniq_book_user_idx")
+	@@map("ratings")
 }
 
-model users {
+model User {
   id       BigInt   @id
   balance  Decimal? @default(0.0) @db.Decimal(15, 2)
   nickname String   @unique(map: "nickname") @db.VarChar(100)
+  ratings  Rating[]
+  orders   Order[]
+
+	@@map("users")
 }
 
-enum books_type {
+// Because special characters cannot be used in the schema definition of the data model.
+// We use `_nbsp_` to represent one space and use `_amp_` to represent `&`.
+
+enum BookType {
   Magazine
   Novel
   Life
   Arts
   Comics
-  Education___Reference        @map("Education & Reference")
-  Humanities___Social_Sciences @map("Humanities & Social Sciences")
-  Science___Technology         @map("Science & Technology")
+  Education_nbsp__amp__nbsp_Reference             @map("Education & Reference")
+  Humanities_nbsp__amp__nbsp_Social_nbsp_Sciences @map("Humanities & Social Sciences")
+  Science_nbsp__amp__nbsp_Technology              @map("Science & Technology")
   Kids
   Sports
+	@@map("books_type")
 }

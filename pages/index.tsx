@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { useCallback, useState } from 'react'
 
-const fetchApi = (endpoint) => {
+const fetchApi = (endpoint: string) => {
   return fetch(`/api/${endpoint}`).then((response) => {
     if (!response.ok) {
       throw new Error('Network response was not ok')
@@ -17,13 +17,13 @@ export default function Home() {
   const [apiError, setApiError] = useState(null)
 
   const getApiCallback = useCallback(
-    (endpoint) => async (e) => {
+    (endpoint: string) => async (e: any) => {
       setLoadingPost(true)
       setApiError(null)
       try {
         const response = await fetchApi(endpoint)
         setApiResponse(response)
-      } catch (e) {
+      } catch (e: any) {
         setApiError(e)
         console.error(e)
       }
