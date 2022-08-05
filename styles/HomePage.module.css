@@ -11,11 +11,12 @@
 .main {
   width: calc(100% - 16rem);
   background-color: #fff;
-  padding-top: 2rem;
+  padding-top: 0.5rem;
 }
 
 .bookList {
   display: grid;
   grid-template-columns: repeat(auto-fit, 256px);
   gap: 2rem;
+  justify-content: start;
 }

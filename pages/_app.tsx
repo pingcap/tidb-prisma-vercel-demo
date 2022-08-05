@@ -1,7 +1,30 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import { RecoilRoot, useRecoilSnapshot } from "recoil";
+import { useEffect } from "react";
+import { SnackbarProvider } from "notistack";
 
-function MyApp({ Component, pageProps }: any) {
-  return <Component {...pageProps} />
+function DebugObserver(): any {
+  const snapshot = useRecoilSnapshot();
+  useEffect(() => {
+    console.debug("The following atoms were modified:");
+    for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
+      console.debug(node.key, snapshot.getLoadable(node));
+    }
+  }, [snapshot]);
+
+  return null;
 }
 
-export default MyApp
+function MyApp({ Component, pageProps }: AppProps) {
+  return (
+    <RecoilRoot>
+      <DebugObserver />
+      <SnackbarProvider maxSnack={3} autoHideDuration={1000}>
+        <Component {...pageProps} />
+      </SnackbarProvider>
+    </RecoilRoot>
+  );
+}
+
+export default MyApp;

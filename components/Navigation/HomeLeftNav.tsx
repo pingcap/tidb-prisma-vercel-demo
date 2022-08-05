@@ -10,9 +10,87 @@ import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import ListSubheader from "@mui/material/ListSubheader";
 import Checkbox from "@mui/material/Checkbox";
+import { VariantType, useSnackbar } from "notistack";
+import Skeleton from "@mui/material/Skeleton";
+
+import {
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+  useRecoilValueLoadable,
+} from "recoil";
+import { bookTypeListState, homePageQueryState } from "atoms";
+
+import { fetchBookTypes } from "lib/http";
+
+const BookTypeComponent = (props: { loading: boolean; data: string[] }) => {
+  const [homePageQueryData, setHomePageQueryData] =
+    useRecoilState(homePageQueryState);
+  return (
+    <>
+      <List>
+        <ListSubheader>{`Book Types`}</ListSubheader>
+        {props.loading && (
+          <>
+            <ListItem disablePadding>
+              <Skeleton
+                sx={{ margin: "0 1rem", width: "100%", height: "3rem" }}
+              />
+            </ListItem>
+          </>
+        )}
+        {props.data.map((bookType) => (
+          <ListItem key={bookType} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                // setBookType(bookType);
+                // setHomePageIdx(1);
+                setHomePageQueryData({
+                  ...homePageQueryData,
+                  page: 1,
+                  type: bookType,
+                });
+              }}
+              selected={homePageQueryData.type === bookType}
+            >
+              <ListItemText
+                primary={bookType
+                  .replaceAll(`_nbsp_`, ` `)
+                  .replaceAll(`_amp_`, `&`)}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </>
+  );
+};
 
 export default function BasicList(props: { className?: string }) {
   const [checked, setChecked] = React.useState([0]);
+  const [loadingBookType, setLoadingBookType] = React.useState(false);
+
+  const [bookTypeList, setBookTypeList] = useRecoilState(bookTypeListState);
+
+  const { enqueueSnackbar } = useSnackbar();
+
+  React.useEffect(() => {
+    const func = async () => {
+      setLoadingBookType(true);
+      const res = await fetchBookTypes();
+      const { error, content } = res;
+      if (error) {
+        setLoadingBookType(false);
+        enqueueSnackbar(`Error: Fetch Book Types`, {
+          variant: "error",
+        });
+        return;
+      }
+      setBookTypeList(content);
+      setLoadingBookType(false);
+    };
+    !bookTypeList.length && func();
+  });
 
   const handleToggle = (value: number) => () => {
     const currentIndex = checked.indexOf(value);
@@ -33,7 +111,9 @@ export default function BasicList(props: { className?: string }) {
       className={props.className}
     >
       <nav aria-label="main mailbox folders">
-        <List>
+        <BookTypeComponent loading={loadingBookType} data={bookTypeList} />
+
+        {/* <List>
           <ListSubheader>{`Popular in Books`}</ListSubheader>
           <ListItem disablePadding>
             <ListItemButton>
@@ -45,9 +125,9 @@ export default function BasicList(props: { className?: string }) {
               <ListItemText primary="New releases" />
             </ListItemButton>
           </ListItem>
-        </List>
+        </List> */}
 
-        <List>
+        {/* <List>
           <ListSubheader>{`Authors`}</ListSubheader>
           <ListItem disablePadding>
             <ListItemButton role={undefined} onClick={handleToggle(0)} dense>
@@ -77,9 +157,9 @@ export default function BasicList(props: { className?: string }) {
               <ListItemText primary={`Author 2`} />
             </ListItemButton>
           </ListItem>
-        </List>
+        </List> */}
 
-        <List>
+        {/* <List>
           <ListSubheader>{`Price`}</ListSubheader>
           <ListItem disablePadding>
             <ListItemButton>
@@ -91,7 +171,7 @@ export default function BasicList(props: { className?: string }) {
               <ListItemText primary="11 - 20" />
             </ListItemButton>
           </ListItem>
-        </List>
+        </List> */}
       </nav>
     </Box>
   );

@@ -18,7 +18,16 @@ export default function BasicGrid(props: { children?: any }) {
   return (
     <>
       <CommonHeader />
-      {props?.children}
+      <Paper
+        sx={{
+          borderRadius: "unset",
+          boxShadow: "none",
+          backgroundColor: "#fafafa",
+          minHeight: "calc(100vh - 4rem)",
+        }}
+      >
+        {props?.children}
+      </Paper>
     </>
   );
 }

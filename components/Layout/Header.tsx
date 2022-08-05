@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -18,6 +19,11 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Divider from "@mui/material/Divider";
+
+import { shoppingCartState } from "atoms";
+import { useRecoilState } from "recoil";
+
+import { calcCartItemSum } from "lib/utils";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -64,6 +70,8 @@ export default function PrimarySearchAppBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
 
+  const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -101,8 +109,12 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
+      <MenuItem onClick={handleMenuClose} disabled>
+        My account
+      </MenuItem>
+      {/* <Link href="/orders">
+        <MenuItem onClick={handleMenuClose}>Orders</MenuItem>
+      </Link> */}
     </Menu>
   );
 
@@ -123,10 +135,14 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>Shopping Cart</MenuItem>
+      <Link href="/cart">
+        <MenuItem>Shopping Cart</MenuItem>
+      </Link>
       <Divider />
-      <MenuItem>My Account</MenuItem>
-      <MenuItem>Orders</MenuItem>
+      <MenuItem disabled>My Account</MenuItem>
+      {/* <Link href="/orders">
+        <MenuItem>Orders</MenuItem>
+      </Link> */}
     </Menu>
   );
 
@@ -134,24 +150,29 @@ export default function PrimarySearchAppBar() {
     <>
       <AppBar position="static">
         <Toolbar>
-          <MenuBookIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Bookstore
-          </Typography>
+          <Link href="/">
+            <MenuBookIcon sx={{ display: { md: "flex" }, mr: 1 }} />
+          </Link>
+          <Link href="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+                cursor: "pointer",
+              }}
+            >
+              Bookstore
+            </Typography>
+          </Link>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -163,15 +184,20 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
-            >
-              <Badge badgeContent={4} color="error">
-                <ShoppingCartCheckoutIcon />
-              </Badge>
-            </IconButton>
+            <Link href="/cart">
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+              >
+                <Badge
+                  badgeContent={calcCartItemSum(shoppingCart)}
+                  color="error"
+                >
+                  <ShoppingCartCheckoutIcon />
+                </Badge>
+              </IconButton>
+            </Link>
             <IconButton
               size="large"
               edge="end"

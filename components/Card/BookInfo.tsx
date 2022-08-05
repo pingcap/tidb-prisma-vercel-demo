@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -9,60 +10,120 @@ import CardMedia from "@mui/material/CardMedia";
 import Rating from "@mui/material/Rating";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { VariantType, useSnackbar } from "notistack";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
+import { shoppingCartState } from "atoms";
+import { useRecoilState } from "recoil";
 
-interface BookInfoCardProps {
-  id: number;
-  title: string;
-  type?: string;
-  price: number;
-  avgRatings: number;
-}
+import { BookProps } from "const";
+import { currencyFormat } from "lib/utils";
 
-function currencyFormat(num: number) {
-  return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-}
+export default function BasicCard(props: BookProps) {
+  const { id, title, type, price, averageRating, authors, ratings, stock } =
+    props;
+  const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
 
-export default function BasicCard(props: BookInfoCardProps) {
-  const { id, title, type, price, avgRatings } = props;
+  const { enqueueSnackbar } = useSnackbar();
+  const handleClick = () => {
+    enqueueSnackbar(`"${title}" was successfully added.`, {
+      variant: "success",
+    });
+  };
+
+  const addItem = () => {
+    setShoppingCart((oldShoppingCart) => {
+      const existingItem = oldShoppingCart.find((i) => i.id === id);
+      if (existingItem) {
+        if (existingItem.quantity >= stock) {
+          enqueueSnackbar(`Out of stock!`, { variant: "error" });
+          return [...oldShoppingCart];
+        }
+        const newItem = {
+          ...existingItem,
+          quantity: existingItem.quantity + 1,
+        };
+        enqueueSnackbar(`"${title}" was successfully added.`, {
+          variant: "success",
+        });
+        return [...oldShoppingCart.filter((i) => i.id !== id), newItem];
+      }
+      enqueueSnackbar(`"${title}" was successfully added.`, {
+        variant: "success",
+      });
+      return [
+        ...oldShoppingCart,
+        {
+          ...props,
+          quantity: 1,
+        },
+      ];
+    });
+  };
+
   return (
-    <Card sx={{ width: 256 }}>
-      <CardMedia
-        component="img"
-        height="140"
-        image={`https://picsum.photos/seed/${id}/200/300`}
-        alt={title}
-      />
-      <CardContent>
-        {type && (
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {type}
-          </Typography>
-        )}
-        <Typography variant="h5" component="div">
-          {title}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          author 1
-        </Typography>
-        <Rating
-          name="read-only"
-          precision={0.5}
-          value={3.5}
-          size="small"
-          readOnly
+    <Card
+      sx={{
+        width: 256,
+        boxShadow:
+          "0 0.5em 1em -0.125em hsl(0deg 0% 4% / 10%), 0 0 0 1px hsl(0deg 0% 4% / 2%)",
+        border: "1px solid #e9eaee",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <Box>
+        <CardMedia
+          component="img"
+          height="140"
+          image={`https://picsum.photos/seed/${id}/200/300`}
+          alt={title}
         />
-      </CardContent>
+        <CardContent>
+          {type && (
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              {type.replaceAll(`_nbsp_`, ` `).replaceAll(`_amp_`, `&`)}
+            </Typography>
+          )}
+          <Link href={`/book/${id}`}>
+            <Typography variant="h5" component="div" sx={{ cursor: "pointer" }}>
+              {title}
+            </Typography>
+          </Link>
+
+          <Typography sx={{ mb: 1.5 }} color="text.secondary">
+            {authors.map((author) => author.author.name).join(`, `)}
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <Rating
+              name="read-only"
+              precision={0.5}
+              value={averageRating}
+              size="small"
+              readOnly
+            />
+            <Typography
+              component="div"
+              variant="body2"
+              sx={{ color: "#616161" }}
+            >
+              {ratings}
+            </Typography>
+          </Box>
+        </CardContent>
+      </Box>
       <CardActions>
-        <IconButton aria-label="add to cart">
+        <IconButton
+          aria-label="add to cart"
+          disabled={stock <= 0}
+          onClick={() => {
+            addItem();
+          }}
+        >
           <AddShoppingCartIcon />
         </IconButton>
         <Typography
