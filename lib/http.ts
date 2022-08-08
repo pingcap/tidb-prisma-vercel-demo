@@ -93,3 +93,45 @@ export async function updateBookDetails(
     return { error };
   }
 }
+
+export async function addRatingByBookID(
+  bookID: string,
+  params: {
+    score: number;
+  }
+): Promise<{
+  content?: { data: Omit<BookRatingsProps, "user">; message: string };
+  error?: any;
+}> {
+  try {
+    const response = await axios.post(`/api/books/${bookID}/ratings`, params);
+    if (response.status !== 200) {
+      throw new Error(`${response.status} - ${response.data}`);
+    }
+    return { content: response.data };
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+}
+
+export async function deleteRating(
+  bookID: string,
+  userID: string
+): Promise<{
+  content?: { message: string };
+  error?: any;
+}> {
+  try {
+    const response = await axios.delete(
+      `/api/books/${bookID}/ratings?userId=${userID}`
+    );
+    if (response.status !== 200) {
+      throw new Error(`${response.status} - ${response.data}`);
+    }
+    return { content: response.data };
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+}

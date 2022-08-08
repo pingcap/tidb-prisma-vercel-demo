@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
-import type {
-  NextPage,
-  GetStaticProps,
-  GetStaticPaths,
-  GetServerSideProps,
-} from "next";
+import type { NextPage } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
@@ -17,7 +13,6 @@ import Button from "@mui/material/Button";
 import Pagination from "@mui/material/Pagination";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
 import HomeIcon from "@mui/icons-material/Home";
 import BookIcon from "@mui/icons-material/Book";
 import Avatar from "@mui/material/Avatar";
@@ -28,8 +23,6 @@ import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
 import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
 
 import {
   useRecoilState,
@@ -40,12 +33,10 @@ import {
 import { bookDetailsIdState } from "atoms";
 import { bookInfoQuery, bookRatingQuery } from "selectors";
 
-import styles from "../styles/HomePage.module.css";
 import CommonLayout from "components/Layout";
-import LeftNav from "components/Navigation/HomeLeftNav";
-import BookInfoCard from "components/Card/BookInfo";
-import CartList from "components/List/CartList";
 import BookInfoFormDialog from "components/Dialog/BookInfoDialog";
+import DeleteRatingDialog from "components/Dialog/DeleteRatingDialog";
+import AddRatingDialog from "components/Dialog/AddRatingDialog";
 import { currencyFormat, roundHalf } from "lib/utils";
 import { BookRatingsProps, starLabels, BookDetailProps } from "const";
 
@@ -66,14 +57,17 @@ const BookInfoSection = () => {
       return (
         <>
           <Breadcrumbs aria-label="breadcrumb" sx={{ padding: "1rem 0" }}>
-            <Link
-              underline="hover"
-              color="inherit"
-              sx={{ display: "flex", alignItems: "center" }}
-              href="/"
-            >
-              <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-              Book
+            <Link href="/">
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+                Book
+              </Typography>
             </Link>
             <Typography
               sx={{ display: "flex", alignItems: "center" }}
@@ -158,14 +152,17 @@ const BookInfoSection = () => {
       return (
         <>
           <Breadcrumbs aria-label="breadcrumb" sx={{ padding: "1rem 0" }}>
-            <Link
-              underline="hover"
-              color="inherit"
-              sx={{ display: "flex", alignItems: "center" }}
-              href="/"
-            >
-              <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-              Book
+            <Link href="/">
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  cursor: "pointer",
+                }}
+              >
+                <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+                Book
+              </Typography>
             </Link>
             <Typography
               sx={{ display: "flex", alignItems: "center" }}
@@ -220,6 +217,12 @@ const ReviewItem = (props: BookRatingsProps) => {
             {props.user.nickname.substring(0, 1)}
           </Avatar>
           <Typography color="text.secondary">{props.user.nickname}</Typography>
+          <DeleteRatingDialog
+            bookId={props.bookId}
+            userId={props.userId}
+            score={props.score}
+            ratedAt={props.ratedAt}
+          />
         </Box>
         <Box sx={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <Rating
@@ -352,6 +355,7 @@ const ReviewOverview = (props: { content: BookRatingsProps[] }) => {
 
 const CustomerReviewSection = () => {
   const bookRatingLodable = useRecoilValueLoadable(bookRatingQuery);
+  const [bookDetailsId] = useRecoilState(bookDetailsIdState);
   switch (bookRatingLodable.state) {
     case "hasValue":
       const data = bookRatingLodable.contents.content;
@@ -359,6 +363,7 @@ const CustomerReviewSection = () => {
         <>
           <Typography component="h2" variant="h5">
             Customer Reviews
+            {bookDetailsId && <AddRatingDialog bookId={bookDetailsId} />}
           </Typography>
           <Box sx={{ display: "flex", gap: "2rem" }}>
             <ReviewOverview content={data.content} />
