@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  previewFeatures = ["referentialIntegrity", "interactiveTransactions"]
 }
 
 // TiDB is highly compatible with the MySQL 5.7 protocol and the common features 
@@ -49,8 +49,8 @@ model Book {
   title        String     @db.VarChar(100)
   type         BookType
   publishedAt  DateTime   @db.DateTime(0) @map("published_at")
-  stock        Int?       @default(0)
-  price        Decimal?   @default(0.0) @db.Decimal(15, 2)
+  stock        Int        @default(0)
+  price        Decimal    @default(0.0) @db.Decimal(15, 2)
   authors      BookAuthor[]
   ratings      Rating[]
   orders       Order[]
@@ -58,7 +58,7 @@ model Book {
 }
 
 model Order {
-  id          BigInt   @id
+  id          BigInt   @id @default(autoincrement())
   book        Book     @relation(fields: [bookId], references: [id])
   bookId      BigInt   @map("book_id")
   user        User     @relation(fields: [userId], references: [id])
@@ -85,7 +85,7 @@ model Rating {
 
 model User {
   id       BigInt   @id
-  balance  Decimal? @default(0.0) @db.Decimal(15, 2)
+  balance  Decimal  @default(0.0) @db.Decimal(15, 2)
   nickname String   @unique(map: "nickname") @db.VarChar(100)
   ratings  Rating[]
   orders   Order[]

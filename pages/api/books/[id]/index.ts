@@ -1,7 +1,6 @@
 
 import prisma from '../../../../lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Book } from '@mui/icons-material';
 
 const ALLOW_UPDATE_FIELDS = ['type', 'price', 'stock', 'publishedAt']
 

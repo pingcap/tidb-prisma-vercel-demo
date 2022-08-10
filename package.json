@@ -13,7 +13,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.93",
     "@mui/material": "^5.9.2",
-    "@prisma/client": "^4.1.1",
+    "@prisma/client": "^4.2.1",
     "axios": "^0.27.2",
     "next": "12.2.2",
     "notistack": "^2.0.5",
