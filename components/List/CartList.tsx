@@ -29,6 +29,7 @@ import { calcCartItemSum, calcCartItemTotalPrice } from "lib/utils";
 
 const SubTotal = (props: { sum: number; price: number }) => {
   const { sum, price } = props;
+
   return (
     <Box
       sx={{
@@ -46,9 +47,6 @@ const SubTotal = (props: { sum: number; price: number }) => {
         </Typography>
         {price}
       </Typography>
-      <Button variant="contained" disabled>
-        Proceed to Purchase
-      </Button>
     </Box>
   );
 };

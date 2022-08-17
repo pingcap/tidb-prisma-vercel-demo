@@ -66,6 +66,35 @@ const BookTypeComponent = (props: { loading: boolean; data: string[] }) => {
   );
 };
 
+const SortComponent = () => {
+  const [homePageQueryData, setHomePageQueryData] =
+    useRecoilState(homePageQueryState);
+  const SORT_VALUE = ["published_at", "price"];
+  return (
+    <>
+      <List>
+        <ListSubheader>{`Sort By`}</ListSubheader>
+        {SORT_VALUE.map((sortType) => (
+          <ListItem key={sortType} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                setHomePageQueryData({
+                  ...homePageQueryData,
+                  page: 1,
+                  sort: sortType,
+                });
+              }}
+              selected={homePageQueryData.sort === sortType}
+            >
+              <ListItemText primary={sortType} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </>
+  );
+};
+
 export default function BasicList(props: { className?: string }) {
   const [checked, setChecked] = React.useState([0]);
   const [loadingBookType, setLoadingBookType] = React.useState(false);
@@ -112,6 +141,7 @@ export default function BasicList(props: { className?: string }) {
     >
       <nav aria-label="main mailbox folders">
         <BookTypeComponent loading={loadingBookType} data={bookTypeList} />
+        <SortComponent />
 
         {/* <List>
           <ListSubheader>{`Popular in Books`}</ListSubheader>

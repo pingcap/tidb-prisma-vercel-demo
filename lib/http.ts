@@ -1,6 +1,7 @@
-import axios, { AxiosResponse } from "axios";
-
+import { AxiosInstance } from "axios";
 import { BookProps, BookDetailProps, BookRatingsProps } from "const";
+
+const axios: AxiosInstance = require("axios").default;
 
 export async function fetchBooks(data: {
   page?: number;
@@ -125,6 +126,27 @@ export async function deleteRating(
   try {
     const response = await axios.delete(
       `/api/books/${bookID}/ratings?userId=${userID}`
+    );
+    if (response.status !== 200) {
+      throw new Error(`${response.status} - ${response.data}`);
+    }
+    return { content: response.data };
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+}
+
+export async function buyBook(
+  bookID: string,
+  params: { userID: string; quality: number }
+): Promise<{
+  content?: { message: string };
+  error?: any;
+}> {
+  try {
+    const response = await axios.post(
+      `/api/books/${bookID}/buy?userId=${params.userID}&quality=${params.quality}`
     );
     if (response.status !== 200) {
       throw new Error(`${response.status} - ${response.data}`);

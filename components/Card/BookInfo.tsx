@@ -1,5 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -73,12 +74,14 @@ export default function BasicCard(props: BookProps) {
       }}
     >
       <Box>
-        <CardMedia
-          component="img"
-          height="140"
-          image={`https://picsum.photos/seed/${id}/200/300`}
-          alt={title}
-        />
+        <CardMedia>
+          <Image
+            src={`https://picsum.photos/seed/${id}/200/300`}
+            alt={title}
+            width={254}
+            height={140}
+          />
+        </CardMedia>
         <CardContent>
           {type && (
             <Typography

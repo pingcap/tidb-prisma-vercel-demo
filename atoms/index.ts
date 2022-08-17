@@ -26,3 +26,8 @@ export const bookDetailsIdState = atom({
   key: "bookDetailsIdState",
   default: "",
 });
+
+export const currentUserIdState = atom({
+  key: "currentUserIdState",
+  default: "84122908",
+});
