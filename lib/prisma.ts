@@ -17,13 +17,19 @@ declare global {
 
 let prisma: PrismaClient
 
+const DATABASE_URL =
+  process.env.TIDB_USER &&
+  process.env.TIDB_PASSWORD &&
+  process.env.TIDB_HOST &&
+  process.env.TIDB_PORT
+    ? `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop`
+    : process.env.DATABASE_URL;
+
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient({
     datasources: {
       db: {
-        url:
-          process.env.DATABASE_URL ||
-          `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop`,
+        url: DATABASE_URL,
       },
     },
   });
@@ -32,9 +38,7 @@ if (process.env.NODE_ENV === 'production') {
     global.prisma = new PrismaClient({
       datasources: {
         db: {
-          url:
-            process.env.DATABASE_URL ||
-            `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop`,
+          url: DATABASE_URL,
         },
       },
     });
