@@ -18,10 +18,26 @@ declare global {
 let prisma: PrismaClient
 
 if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient()
+  prisma = new PrismaClient({
+    datasources: {
+      db: {
+        url:
+          process.env.DATABASE_URL ||
+          `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop`,
+      },
+    },
+  });
 } else {
   if (!global.prisma) {
-    global.prisma = new PrismaClient()
+    global.prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url:
+            process.env.DATABASE_URL ||
+            `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop`,
+        },
+      },
+    });
   }
   prisma = global.prisma
 }
