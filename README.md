@@ -18,7 +18,11 @@ You can perform CRUD operations such as viewing book details, adding and deletin
 
 You can click the button to quickly deploy this demo if already has an TiDB Cloud cluster with bookshop data imported.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMini256%2Ftidb-prisma-vercel-demo&repository-name=tidb-prisma-demo&env=DATABASE_URL&envDescription=TiDB%20Cloud%20connection%20string&envLink=https%3A%2F%2Fdocs.pingcap.com%2Ftidb%2Fdev%2Fdev-guide-build-cluster-in-cloud&project-name=tidb-prisma-demo)
+[![Deploy with Vercel](https://vercel.com/button)](<https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpingcap%2Ftidb-prisma-vercel-demo&env=DATABASE_URL&envDescription=Manually%20configure%20database%20URL.%20(Not%20required)&envLink=https%3A%2F%2Fgithub.com%2Fpingcap%2Ftidb-prisma-vercel-demo%231-register-tidb-cloud-and-create-dev-tier-cluster&project-name=tidb-cloud-starter&repository-name=tidb-prisma-vercel-demo&demo-title=TiDB%20Cloud%20Starter&demo-description=TiDB%20Cloud%20Starter%20desc&demo-url=https%3A%2F%2Ftidb-prisma-vercel-demo.vercel.app%2F&integration-ids=oac_coKBVWCXNjJnCEth1zzKoF1j>)
+
+> Integration will guide you connect your TiDB Cloud cluster to Vercel.
+
+> Do remember to import the bookshop data into your TiDB Cloud cluster. (Follow this [guide](#2-import-table-structures-and-data))
 
 ### 🧑‍🔧 Manually Deploy
 
