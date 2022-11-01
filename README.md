@@ -38,7 +38,8 @@ You can click the button to quickly deploy this demo if already has an TiDB Clou
 
 > Integration will guide you connect your TiDB Cloud cluster to Vercel.
 
-### 🧑‍🔧 Manually Deploy
+<details>
+  <summary><h3>🧑‍🔧 Manually Deploy (Not recommended)</h3></summary>
 
 #### 1. Get connection details
 
@@ -59,6 +60,8 @@ Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/book
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpingcap%2Ftidb-prisma-vercel-demo&repository-name=tidb-prisma-vercel-demo&env=DATABASE_URL&envDescription=TiDB%20Cloud%20connection%20string&envLink=https%3A%2F%2Fdocs.pingcap.com%2Ftidb%2Fdev%2Fdev-guide-build-cluster-in-cloud&project-name=tidb-prisma-vercel-demo)
 
 ![image](https://user-images.githubusercontent.com/56986964/199161016-2d236629-bb6a-4e3c-a700-c0876523ca6a.png)
+
+</details>
 
 ## 📖 Develop Reference
 
