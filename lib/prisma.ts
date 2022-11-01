@@ -22,8 +22,8 @@ const DATABASE_URL =
   process.env.TIDB_PASSWORD &&
   process.env.TIDB_HOST &&
   process.env.TIDB_PORT
-    ? `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop?pool_timeout=60`
-    : `${process.env.DATABASE_URL}?pool_timeout=60`;
+    ? `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop?pool_timeout=60&sslaccept=accept_invalid_certs`
+    : `${process.env.DATABASE_URL}?pool_timeout=60&sslaccept=accept_invalid_certs`;
 
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient({
