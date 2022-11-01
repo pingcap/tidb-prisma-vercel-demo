@@ -378,7 +378,8 @@ const CustomerReviewSection = () => {
     case "loading":
       return <></>;
     case "hasError":
-      throw bookRatingLodable.contents;
+      // throw bookRatingLodable.contents;
+      return <></>;
   }
 };
 

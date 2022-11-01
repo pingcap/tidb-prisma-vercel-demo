@@ -14,6 +14,22 @@ You can perform CRUD operations such as viewing book details, adding and deletin
 
 ## Deploy on Vercel
 
+## 🧑‍🍳 Before We Start
+
+1. Create a [TiDB Cloud](https://tidbcloud.com/) account and get your free trial cluster.
+
+2. Import the pre-defined database schema and sample data into your TiDB Cloud cluster [(Guide)](https://docs.pingcap.com/tidbcloud/dev-guide-bookshop-schema-design#method-2-via-tidb-cloud-import).
+
+   - Click `Import Data` ![image](https://user-images.githubusercontent.com/56986964/199159442-0b6fe0da-c92f-47bb-b873-be35569464c3.png)
+   - Select SQL File for Data Format.
+   - Copy the following Bucket URI and Role ARN to the corresponding input boxes:
+     - Bucket URI: `s3://developer.pingcap.com/bookshop/`
+     - Role ARN: `arn:aws:iam::494090988690:role/s3-tidb-cloud-developer-access`
+   - ![image](https://user-images.githubusercontent.com/56986964/199159665-e97c7c94-91ce-4268-bde8-61744757ea9a.png)
+   - Click Next to go to the File and filter step to confirm the information of the files to be imported.
+   - Click Next again to go to the Preview step to confirm the preview of the data to be imported.
+   - Click Start Import to start the import process and wait for TiDB Cloud to complete the import.
+
 ### 🚀 One Click Deploy
 
 You can click the button to quickly deploy this demo if already has an TiDB Cloud cluster with bookshop data imported.
@@ -22,15 +38,11 @@ You can click the button to quickly deploy this demo if already has an TiDB Clou
 
 > Integration will guide you connect your TiDB Cloud cluster to Vercel.
 
-> Do remember to import the bookshop data into your TiDB Cloud cluster. (Follow this [guide](#2-import-table-structures-and-data))
-
 ### 🧑‍🔧 Manually Deploy
 
-#### 1. Register TiDB Cloud and create dev-tier cluster
+#### 1. Get connection details
 
-[Click here to visit TiDB Cloud](https://tidbcloud.com/)
-
-After cluster created, you can get the connection details by clicking the `Connect` button.
+You can get the connection details by clicking the `Connect` button.
 
 ![image](https://user-images.githubusercontent.com/56986964/183590385-0e688bac-8c4b-4988-ad02-692650b4c5a8.png)
 
@@ -42,37 +54,11 @@ Get `User` and `Host` field from the dialog.
 
 Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/bookshop`
 
-#### 2. Import table structures and data
+#### 2. Deploy on Vercel
 
-2.1 Install `TiUP`
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fpingcap%2Ftidb-prisma-vercel-demo&repository-name=tidb-prisma-vercel-demo&env=DATABASE_URL&envDescription=TiDB%20Cloud%20connection%20string&envLink=https%3A%2F%2Fdocs.pingcap.com%2Ftidb%2Fdev%2Fdev-guide-build-cluster-in-cloud&project-name=tidb-prisma-vercel-demo)
 
-TiUP is a component manager for TiDB.
-
-Run the following in your terminal:
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh
-```
-
-2.2 Run `TiUP demo`
-
-> You can get `User` and `Host` from TiDB Cloud panel.
-
-Run the following in your terminal:
-
-```bash
-tiup demo bookshop prepare -U <User> -H <Host> -p <Password>
-```
-
-> More details about importing table structures and data please refer to our [doc](https://docs.pingcap.com/tidbcloud/dev-guide-bookshop-schema-design#method-1-via-tiup-demo).
-
-#### 3. Deploy on Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMini256%2Ftidb-prisma-vercel-demo&repository-name=tidb-prisma-demo&env=DATABASE_URL&envDescription=TiDB%20Cloud%20connection%20string&envLink=https%3A%2F%2Fdocs.pingcap.com%2Ftidb%2Fdev%2Fdev-guide-build-cluster-in-cloud&project-name=tidb-prisma-demo)
-
-> You can get `DATABASE_URL` from previous step.
-
-![image](https://user-images.githubusercontent.com/56986964/183592417-4eae4042-9dba-44a4-a741-288f74f365a1.png)
+![image](https://user-images.githubusercontent.com/56986964/199161016-2d236629-bb6a-4e3c-a700-c0876523ca6a.png)
 
 ## 📖 Develop Reference
 
