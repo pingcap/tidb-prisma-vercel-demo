@@ -39,7 +39,7 @@ You can click the button to quickly deploy this demo if already has an TiDB Clou
 > Integration will guide you connect your TiDB Cloud cluster to Vercel.
 
 <details>
-  <summary><h3>🧑‍🔧 Manually Deploy (Not recommended)</h3></summary>
+  <summary><h3>Manually Deploy (Not recommended)</h3></summary>
 
 #### 1. Get connection details
 
@@ -63,7 +63,7 @@ Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/book
 
 </details>
 
-## 📖 Develop Reference
+## 📖 Development Reference
 
 ### Prisma
 
