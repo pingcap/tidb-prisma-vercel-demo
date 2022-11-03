@@ -24,14 +24,15 @@ datasource db {
 // 
 // https://www.prisma.io/docs/concepts/components/prisma-schema/data-model
 
+
 model Author {
-  id          BigInt   @id
-  name        String   @db.VarChar(100)
-  gender      Boolean?
-  birthYear   Int?     @db.SmallInt @map("birth_year")
-  deathYear   Int?     @db.SmallInt @map("death_year")
-  books       BookAuthor[]
-  
+  id        BigInt       @id
+  name      String       @db.VarChar(100)
+  gender    Boolean?
+  birthYear Int?         @map("birth_year") @db.SmallInt
+  deathYear Int?         @map("death_year") @db.SmallInt
+  books     BookAuthor[]
+
   @@map("authors")
 }
 
@@ -46,27 +47,27 @@ model BookAuthor {
 }
 
 model Book {
-  id           BigInt     @id
-  title        String     @db.VarChar(100)
-  type         BookType
-  publishedAt  DateTime   @db.DateTime(0) @map("published_at")
-  stock        Int        @default(0)
-  price        Decimal    @default(0.0) @db.Decimal(15, 2)
-  authors      BookAuthor[]
-  ratings      Rating[]
-  orders       Order[]
-  
+  id          BigInt       @id
+  title       String       @db.VarChar(100)
+  type        BookType
+  publishedAt DateTime     @map("published_at") @db.DateTime(0)
+  stock       Int          @default(0)
+  price       Decimal      @default(0.0) @db.Decimal(15, 2)
+  authors     BookAuthor[]
+  ratings     Rating[]
+  orders      Order[]
+
   @@map("books")
 }
 
 model Order {
-  id          BigInt   @id @default(autoincrement())
-  book        Book     @relation(fields: [bookId], references: [id])
-  bookId      BigInt   @map("book_id")
-  user        User     @relation(fields: [userId], references: [id])
-  userId      BigInt   @map("user_id")
-  quality     Int      @db.TinyInt
-  orderedAt   DateTime @default(now()) @db.DateTime(0) @map("ordered_at")
+  id        BigInt   @id @default(autoincrement())
+  book      Book     @relation(fields: [bookId], references: [id])
+  bookId    BigInt   @map("book_id")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    BigInt   @map("user_id")
+  quality   Int      @db.TinyInt
+  orderedAt DateTime @default(now()) @map("ordered_at") @db.DateTime(0)
 
   @@index([bookId])
   @@map("orders")
@@ -78,7 +79,7 @@ model Rating {
   user    User     @relation(fields: [userId], references: [id])
   userId  BigInt   @map("user_id")
   score   Int      @db.TinyInt
-  ratedAt DateTime @default(now()) @db.DateTime(0) @map("rated_at")
+  ratedAt DateTime @default(now()) @map("rated_at") @db.DateTime(0)
 
   @@id([bookId, userId])
   @@unique([bookId, userId], map: "uniq_book_user_idx")
@@ -109,6 +110,6 @@ enum BookType {
   Science_nbsp__amp__nbsp_Technology              @map("Science & Technology")
   Kids
   Sports
-  
+
   @@map("books_type")
 }
