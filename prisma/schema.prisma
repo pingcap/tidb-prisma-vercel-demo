@@ -7,18 +7,18 @@ generator client {
 // and syntax of MySQL 5.7.
 //
 // TiDB currently does not support foreign key constraints. If you need to use the feature of 
-// referential integrity, you can use the application layer implementation of prisma.
+// referential integrity, you can use the application layer implementation of prisma via `relationMode`.
 //
-// Refercene: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/referential-integrity#handling-the-referential-integrity-in-prisma
+// Reference: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/referential-integrity#handling-the-referential-integrity-in-prisma
 // Related Issue [WIP]: https://github.com/pingcap/tidb/issues/18209
 // 
 // More descriptions about MySQL compatibility:
 // Refercene: https://docs.pingcap.com/tidb/dev/mysql-compatibility
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 // 
@@ -31,7 +31,7 @@ model Author {
   birthYear   Int?     @db.SmallInt @map("birth_year")
   deathYear   Int?     @db.SmallInt @map("death_year")
   books       BookAuthor[]
-	@@map("authors")
+  @@map("authors")
 }
 
 model BookAuthor {
@@ -41,7 +41,7 @@ model BookAuthor {
   authorId BigInt @map("author_id")
 
   @@id([bookId, authorId])
-	@@map("book_authors")
+  @@map("book_authors")
 }
 
 model Book {
@@ -54,7 +54,7 @@ model Book {
   authors      BookAuthor[]
   ratings      Rating[]
   orders       Order[]
-	@@map("books")
+  @@map("books")
 }
 
 model Order {
@@ -67,7 +67,7 @@ model Order {
   orderedAt   DateTime @default(now()) @db.DateTime(0) @map("ordered_at")
 
   @@index([bookId])
-	@@map("orders")
+  @@map("orders")
 }
 
 model Rating {
@@ -80,7 +80,7 @@ model Rating {
 
   @@id([bookId, userId])
   @@unique([bookId, userId], map: "uniq_book_user_idx")
-	@@map("ratings")
+  @@map("ratings")
 }
 
 model User {
@@ -90,11 +90,11 @@ model User {
   ratings  Rating[]
   orders   Order[]
 
-	@@map("users")
+  @@map("users")
 }
 
-// Because special characters cannot be used in the schema definition of the data model.
-// We use `_nbsp_` to represent one space and use `_amp_` to represent `&`.
+// Because special characters cannot be used in the schema definition of the data model,
+// we use `_nbsp_` to represent one space and use `_amp_` to represent `&`.
 
 enum BookType {
   Magazine
@@ -107,5 +107,6 @@ enum BookType {
   Science_nbsp__amp__nbsp_Technology              @map("Science & Technology")
   Kids
   Sports
-	@@map("books_type")
+  
+  @@map("books_type")
 }
