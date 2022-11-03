@@ -31,6 +31,7 @@ model Author {
   birthYear   Int?     @db.SmallInt @map("birth_year")
   deathYear   Int?     @db.SmallInt @map("death_year")
   books       BookAuthor[]
+  
   @@map("authors")
 }
 
@@ -54,6 +55,7 @@ model Book {
   authors      BookAuthor[]
   ratings      Rating[]
   orders       Order[]
+  
   @@map("books")
 }
 
