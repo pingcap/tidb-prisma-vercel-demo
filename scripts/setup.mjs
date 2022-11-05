@@ -5,11 +5,25 @@ import { faker } from '@faker-js/faker';
 
 dotenv.config();
 
+const DATABASE_URL =
+  process.env.TIDB_USER &&
+  process.env.TIDB_PASSWORD &&
+  process.env.TIDB_HOST &&
+  process.env.TIDB_PORT
+    ? `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop?pool_timeout=60&sslaccept=accept_invalid_certs`
+    : `${process.env.DATABASE_URL}?pool_timeout=60&sslaccept=accept_invalid_certs`;
+
 const setup = async () => {
   let client;
 
   try {
-    client = new PrismaClient();
+    client = new PrismaClient({
+      datasources: {
+        db: {
+          url: DATABASE_URL
+        }
+      }
+    });
     await client.$connect();
 
     const hasData = await client.user.count() > 0;
