@@ -1,8 +1,8 @@
-
-import prisma from '../../../lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async (
+import prisma from '../../../lib/prisma'
+
+const bookOrderMoM = async (
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) => {
@@ -41,3 +41,5 @@ async function getBookOrdersMonthOverMonth(req: NextApiRequest) {
 		result: result
 	}
 }
+
+export default bookOrderMoM;

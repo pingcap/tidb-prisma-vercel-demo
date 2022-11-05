@@ -1,7 +1,8 @@
-import prisma from '../../../../lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async (
+import prisma from '../../../../lib/prisma'
+
+const orderBuy = async (
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) => {
@@ -128,3 +129,5 @@ async function buyBook(req:NextApiRequest): Promise<any> {
         };
     }
 }
+
+export default orderBuy;

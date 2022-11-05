@@ -1,6 +1,7 @@
-import prisma from '../../../lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import { BookType } from '@prisma/client';
+import prisma from '../../../lib/prisma'
 
 const DEFAULT_PAGE_NUM = 1;
 const DEFAULT_PAGE_SIZE = 8;
@@ -17,7 +18,7 @@ const sortTypes = Object.values(SortType);
 const sortOrders = Object.values(SortOrder);
 const bookTypes = Object.keys(BookType);
 
-export default async (
+const bookList =  async (
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) => {
@@ -168,3 +169,5 @@ function parseBookListQuery(query: any, sorting: boolean = false, paging: boolea
 
   return q;
 }
+
+export default bookList;

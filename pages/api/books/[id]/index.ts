@@ -1,10 +1,10 @@
+import { NextApiRequest, NextApiResponse } from 'next';
 
 import prisma from '../../../../lib/prisma'
-import { NextApiRequest, NextApiResponse } from 'next';
 
 const ALLOW_UPDATE_FIELDS = ['type', 'price', 'stock', 'publishedAt']
 
-export default async (
+const bookDetail = async (
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) => {
@@ -98,3 +98,5 @@ async function updateBookDetail(req: NextApiRequest, res: NextApiResponse<any>) 
         data: result
     });
 }
+
+export default bookDetail;

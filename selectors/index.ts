@@ -1,18 +1,16 @@
 import {
   atom,
   selector,
+  selectorFamily,
   useRecoilState,
   useRecoilValue,
   waitForNone,
-  selectorFamily,
 } from "recoil";
-
-import { homePageQueryState, bookDetailsIdState } from "atoms";
-
+import { bookDetailsIdState, homePageQueryState } from "atoms";
 import {
-  fetchBooks,
   fetchBookDetailsById,
   fetchBookRatingsById,
+  fetchBooks,
 } from "lib/http";
 
 export const homePageQuery = selector({
@@ -40,6 +38,9 @@ export const bookRatingQuery = selector({
   key: "BookRatingQuery",
   get: async ({ get }) => {
     const bookID = get(bookDetailsIdState);
+    if (!bookID) {
+      throw new Error('Required bookID');
+    }
     const response = await fetchBookRatingsById(bookID);
     if (response.error) {
       throw response.error;
@@ -47,16 +48,3 @@ export const bookRatingQuery = selector({
     return response;
   },
 });
-
-// export const bookDetailsQuery = selector({
-//   key: "bookDetails",
-//   get: async ({ get }) => {
-//     const bookId = get(bookDetailsIdState);
-//     const bookLoadables = get(
-//       waitForNone([bookInfoQuery(bookId), bookRatingQuery(bookId)])
-//     );
-//     return bookLoadables
-//       .filter(({ state }) => state === "hasValue")
-//       .map(({ contents }) => contents);
-//   },
-// });

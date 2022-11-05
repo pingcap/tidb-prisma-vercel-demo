@@ -1,20 +1,24 @@
 {
   "name": "tidb-prisma-vercel-demo",
   "scripts": {
-    "dev": "next dev",
     "build": "prisma generate && next build",
+    "dev": "next dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:generate": "prisma generate",
+    "setup": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/setup.mjs",
     "start": "next start",
-    "vercel-build": "prisma generate && next build",
-    "prisma:generate": "prisma generate"
+    "vercel-build": "prisma migrate deploy && prisma generate && yarn setup && next build"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
+    "@faker-js/faker": "^7.6.0",
     "@mui/icons-material": "^5.8.4",
     "@mui/lab": "^5.0.0-alpha.93",
     "@mui/material": "^5.9.2",
     "@prisma/client": "^4.2.1",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
     "next": "12.2.2",
     "notistack": "^2.0.5",
     "react": "18.2.0",
