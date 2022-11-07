@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import prisma from '../../../../lib/prisma'
 
-const orderBuy = async (
+const buyBookHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) => {
@@ -130,4 +130,4 @@ async function buyBook(req:NextApiRequest): Promise<any> {
     }
 }
 
-export default orderBuy;
+export default buyBookHandler;

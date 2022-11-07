@@ -7,7 +7,7 @@
     "prisma:generate": "prisma generate",
     "setup": "NODE_OPTIONS='--experimental-json-modules' node ./scripts/setup.mjs",
     "start": "next start",
-    "vercel-build": "prisma migrate deploy && prisma generate && yarn setup && next build"
+    "vercel-build": "export DATABASE_URL=$(node ./scripts/env.mjs) && yarn run prisma:deploy && yarn run setup && yarn run build"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",

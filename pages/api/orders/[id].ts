@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import prisma from '../../../lib/prisma'
 
-const orderDetail = async (
+const orderDetailHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) => {
@@ -51,4 +51,4 @@ async function getOrderDetail(req: NextApiRequest) {
     return order;
 }
 
-export default orderDetail;
+export default orderDetailHandler;

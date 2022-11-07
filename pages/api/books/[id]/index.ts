@@ -4,7 +4,7 @@ import prisma from '../../../../lib/prisma'
 
 const ALLOW_UPDATE_FIELDS = ['type', 'price', 'stock', 'publishedAt']
 
-const bookDetail = async (
+const bookDetailHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) => {
@@ -99,4 +99,4 @@ async function updateBookDetail(req: NextApiRequest, res: NextApiResponse<any>) 
     });
 }
 
-export default bookDetail;
+export default bookDetailHandler;

@@ -4,7 +4,7 @@ import { BookType } from '@prisma/client';
 
 const bookTypes = Object.values(BookType);
 
-const bookTypeList = async (
+const bookTypeListHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) => {
@@ -17,4 +17,4 @@ const bookTypeList = async (
     }
 }
 
-export default bookTypeList;
+export default bookTypeListHandler;

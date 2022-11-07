@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import prisma from '../../../lib/prisma'
 
-const bookOrdersTotal = async (
+const bookOrdersTotalHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) => {
@@ -23,4 +23,4 @@ async function getBookOrderTotal(req: NextApiRequest) {
 	}
 }
 
-export default bookOrdersTotal;
+export default bookOrdersTotalHandler;

@@ -18,7 +18,7 @@ const sortTypes = Object.values(SortType);
 const sortOrders = Object.values(SortOrder);
 const bookTypes = Object.keys(BookType);
 
-const bookList =  async (
+const bookListHandler =  async (
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) => {
@@ -170,4 +170,4 @@ function parseBookListQuery(query: any, sorting: boolean = false, paging: boolea
   return q;
 }
 
-export default bookList;
+export default bookListHandler;

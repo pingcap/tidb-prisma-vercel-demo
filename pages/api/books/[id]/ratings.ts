@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { Prisma } from '@prisma/client';
 import prisma from '../../../../lib/prisma'
 
-const ratingList = async (
+const ratingListHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) => {
@@ -177,4 +177,4 @@ async function removeBookRating(req: NextApiRequest, res: NextApiResponse<any>) 
     }
 }
 
-export default ratingList;
+export default ratingListHandler;
