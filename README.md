@@ -16,23 +16,11 @@ You can perform CRUD operations such as viewing book details, adding and deletin
 
 ## 🧑‍🍳 Before We Start
 
-1. Create a [TiDB Cloud](https://tidbcloud.com/) account and get your free trial cluster.
-
-2. Import the pre-defined database schema and sample data into your TiDB Cloud cluster [(Guide)](https://docs.pingcap.com/tidbcloud/dev-guide-bookshop-schema-design#method-2-via-tidb-cloud-import).
-
-   - Click `Import Data` ![image](https://user-images.githubusercontent.com/56986964/199159442-0b6fe0da-c92f-47bb-b873-be35569464c3.png)
-   - Select SQL File for Data Format.
-   - Copy the following Bucket URI and Role ARN to the corresponding input boxes:
-     - Bucket URI: `s3://developer.pingcap.com/bookshop/`
-     - Role ARN: `arn:aws:iam::494090988690:role/s3-tidb-cloud-developer-access`
-   - ![image](https://user-images.githubusercontent.com/56986964/199159665-e97c7c94-91ce-4268-bde8-61744757ea9a.png)
-   - Click Next to go to the File and filter step to confirm the information of the files to be imported.
-   - Click Next again to go to the Preview step to confirm the preview of the data to be imported.
-   - Click Start Import to start the import process and wait for TiDB Cloud to complete the import.
+Create a [TiDB Cloud](https://tidbcloud.com/) account and get your free trial cluster.
 
 ### 🚀 One Click Deploy
 
-You can click the button to quickly deploy this demo if already has an TiDB Cloud cluster with bookshop data imported.
+You can click the button to quickly deploy this demo if already has an TiDB Cloud cluster.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?demo-title=TiDB%20Cloud%20Starter&demo-description=A%20bookstore%20demo%20built%20on%20TiDB%20Cloud%20and%20Next.js.&demo-url=https%3A%2F%2Ftidb-prisma-vercel-demo.vercel.app%2F&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F2HMASOQn8hQit2IFi2hK3j%2Fcfe7cc2aeba4b8f6760a3ea14c32f707%2Fscreenshot-20220902-160324_-_Chen_Zhen.png&project-name=TiDB%20Cloud%20Starter&repository-name=tidb-cloud-starter&repository-url=https%3A%2F%2Fgithub.com%2Fpingcap%2Ftidb-prisma-vercel-demo&from=templates&integration-ids=oac_coKBVWCXNjJnCEth1zzKoF1j)
 
