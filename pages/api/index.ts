@@ -1,8 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async (
+const health =  async (
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) => {
   res.status(200).json({ up: true })
 }
+
+export default health;

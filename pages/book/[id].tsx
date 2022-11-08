@@ -1,44 +1,43 @@
-import { useEffect, useState } from "react";
-import type { NextPage } from "next";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import Image from "next/image";
-import Container from "@mui/material/Container";
-import Skeleton from "@mui/material/Skeleton";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Pagination from "@mui/material/Pagination";
-import Typography from "@mui/material/Typography";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import HomeIcon from "@mui/icons-material/Home";
-import BookIcon from "@mui/icons-material/Book";
-import Avatar from "@mui/material/Avatar";
-import Rating from "@mui/material/Rating";
-import StarIcon from "@mui/icons-material/Star";
-import { Divider } from "@mui/material";
+import { BookDetailProps, BookRatingsProps, starLabels } from "const";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
-import { styled } from "@mui/material/styles";
-
+import { bookInfoQuery, bookRatingQuery } from "selectors";
+import { currencyFormat, roundHalf } from "lib/utils";
+import { useEffect, useState } from "react";
 import {
   useRecoilState,
   useRecoilValue,
-  useSetRecoilState,
   useRecoilValueLoadable,
+  useSetRecoilState,
 } from "recoil";
-import { bookDetailsIdState } from "atoms";
-import { bookInfoQuery, bookRatingQuery } from "selectors";
 
-import CommonLayout from "components/Layout";
-import BookInfoFormDialog from "components/Dialog/BookInfoDialog";
-import DeleteRatingDialog from "components/Dialog/DeleteRatingDialog";
 import AddRatingDialog from "components/Dialog/AddRatingDialog";
-import { currencyFormat, roundHalf } from "lib/utils";
-import { BookRatingsProps, starLabels, BookDetailProps } from "const";
+import Avatar from "@mui/material/Avatar";
+import BookIcon from "@mui/icons-material/Book";
+import BookInfoFormDialog from "components/Dialog/BookInfoDialog";
+import Box from "@mui/material/Box";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Button from "@mui/material/Button";
+import CommonLayout from "components/Layout";
+import Container from "@mui/material/Container";
+import DeleteRatingDialog from "components/Dialog/DeleteRatingDialog";
+import { Divider } from "@mui/material";
+import Head from "next/head";
+import HomeIcon from "@mui/icons-material/Home";
+import Image from "next/image";
+import Link from "next/link";
+import type { NextPage } from "next";
+import Pagination from "@mui/material/Pagination";
+import Paper from "@mui/material/Paper";
+import Rating from "@mui/material/Rating";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import StarIcon from "@mui/icons-material/Star";
+import Typography from "@mui/material/Typography";
+import { bookDetailsIdState } from "atoms";
+import { styled } from "@mui/material/styles";
+import { useRouter } from "next/router";
 
 const BookInfoSection = () => {
   const [bookDetailsState, setBookDetailsState] = useState<
@@ -354,11 +353,11 @@ const ReviewOverview = (props: { content: BookRatingsProps[] }) => {
 };
 
 const CustomerReviewSection = () => {
-  const bookRatingLodable = useRecoilValueLoadable(bookRatingQuery);
+  const bookRatingLoadable = useRecoilValueLoadable(bookRatingQuery);
   const [bookDetailsId] = useRecoilState(bookDetailsIdState);
-  switch (bookRatingLodable.state) {
+  switch (bookRatingLoadable.state) {
     case "hasValue":
-      const data = bookRatingLodable.contents.content;
+      const data = bookRatingLoadable.contents.content;
       return (
         <>
           <Typography component="h2" variant="h5">

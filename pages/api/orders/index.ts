@@ -1,10 +1,11 @@
-import prisma from '../../../lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next';
+
+import prisma from '../../../lib/prisma'
 
 const DEFAULT_PAGE_NUM = 1;
 const DEFAULT_PAGE_SIZE = 8;
 
-export default async (
+const orderListHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) => {
@@ -78,3 +79,5 @@ function parseOrderListQuery(query: any, sorting: boolean = false, paging: boole
 
   return q;
 }
+
+export default orderListHandler;

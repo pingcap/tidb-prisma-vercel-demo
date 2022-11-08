@@ -1,8 +1,8 @@
-
-import prisma from '../../../lib/prisma'
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export default async (
+import prisma from '../../../lib/prisma'
+
+const orderDetailHandler = async (
     req: NextApiRequest,
     res: NextApiResponse<any>
 ) => {
@@ -50,3 +50,5 @@ async function getOrderDetail(req: NextApiRequest) {
 
     return order;
 }
+
+export default orderDetailHandler;

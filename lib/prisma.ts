@@ -17,19 +17,18 @@ declare global {
 
 let prisma: PrismaClient
 
-const DATABASE_URL =
-  process.env.TIDB_USER &&
-  process.env.TIDB_PASSWORD &&
-  process.env.TIDB_HOST &&
-  process.env.TIDB_PORT
-    ? `mysql://${process.env.TIDB_USER}:${process.env.TIDB_PASSWORD}@${process.env.TIDB_HOST}:${process.env.TIDB_PORT}/bookshop?pool_timeout=60&sslaccept=accept_invalid_certs`
-    : `${process.env.DATABASE_URL}?pool_timeout=60&sslaccept=accept_invalid_certs`;
+const { TIDB_USER, TIDB_PASSWORD, TIDB_HOST, TIDB_PORT, TIDB_DB_NAME = 'bookshop', DATABASE_URL } = process.env;
+// Notice: When using TiDb Cloud Serverless Tier, you **MUST** set the following flags to enable tls connection.
+const SSL_FLAGS = 'pool_timeout=60&sslaccept=accept_invalid_certs';
+const databaseURL = DATABASE_URL
+    ? `${DATABASE_URL}?${SSL_FLAGS}`
+    : `mysql://${TIDB_USER}:${TIDB_PASSWORD}@${TIDB_HOST}:${TIDB_PORT}/${TIDB_DB_NAME}?${SSL_FLAGS}`;
 
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient({
     datasources: {
       db: {
-        url: DATABASE_URL,
+        url: databaseURL,
       },
     },
   });
@@ -38,7 +37,7 @@ if (process.env.NODE_ENV === 'production') {
     global.prisma = new PrismaClient({
       datasources: {
         db: {
-          url: DATABASE_URL,
+          url: databaseURL,
         },
       },
     });
