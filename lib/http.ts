@@ -1,7 +1,5 @@
-import { AxiosInstance } from "axios";
+import axios from "axios";
 import { BookProps, BookDetailProps, BookRatingsProps } from "const";
-
-const axios: AxiosInstance = require("axios").default;
 
 export async function fetchBooks(data: {
   page?: number;
