@@ -51,6 +51,22 @@ Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/book
 
 </details>
 
+## Run Development Server
+
+```bash
+# install dependencies
+yarn
+# config database URL
+export DATABASE_URL='mysql://<User>:<Password>@<Host>:4000/bookshop?pool_timeout=60&sslaccept=accept_invalid_certs'
+# init database
+yarn prisma:deploy
+yarn setup
+# run development server
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
 ## 📖 Development Reference
 
 ### Prisma
