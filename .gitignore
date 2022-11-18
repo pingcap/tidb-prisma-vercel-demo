@@ -2,7 +2,6 @@
 node_modules/
 *.env*
 
-.vercel
 package-lock.json
 
 # next.js
@@ -29,3 +28,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# Local Netlify folder
+.netlify
