@@ -86,7 +86,7 @@ The **Deploy to Netlify** button will take you Netlify's deployment page. Then N
 7. Enter "DATABASE_URL" in the **Key** field.
 8. Enter the DATABASE_URL string, set in the previous step, in the **Values** field.
 9. Click **Create variable** to complete adding environment variable.
-   ![2mtQqEV52R](https://user-images.githubusercontent.com/35677990/202990218-13f5e36c-8772-4e0e-befb-d79efc653d2f.jpg)
+   ![image](https://user-images.githubusercontent.com/35677990/202992567-a25b9d32-6dc1-4a0c-bb22-50ab1b228582.jpg)
 10. Navigate to **Deploys** panel.
 11. Click **Trigger deploy** and choose **Deploy site**.
 
