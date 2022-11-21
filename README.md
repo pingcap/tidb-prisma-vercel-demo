@@ -65,7 +65,7 @@ Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/book
 
 1. Navigate to your TiDB Serverless cluster's dashboard.
 2. Get **Endpoint**, **Port** and **User** field from the Connection tab.
-3. Build your **DATABASE_URL**: `mysql://<User>:<Password>@<Endpoint>:<Port>/bookshop`
+3. Build your DATABASE_URL string: `mysql://<User>:<Password>@<Endpoint>:<Port>/bookshop`
 
 ![image](https://user-images.githubusercontent.com/35677990/202609001-ecf07f3d-a7a3-4376-9b7d-54f4096aaec6.jpg)
 
@@ -86,6 +86,7 @@ The **Deploy to Netlify** button will take you Netlify's deployment page. Then N
 7. Enter "DATABASE_URL" in the **Key** field.
 8. Enter the DATABASE_URL string, set in the previous step, in the **Values** field.
 9. Click **Create variable** to complete adding environment variable.
+   ![2mtQqEV52R](https://user-images.githubusercontent.com/35677990/202990218-13f5e36c-8772-4e0e-befb-d79efc653d2f.jpg)
 10. Navigate to **Deploys** panel.
 11. Click **Trigger deploy** and choose **Deploy site**.
 
