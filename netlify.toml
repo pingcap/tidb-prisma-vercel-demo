@@ -2,6 +2,3 @@
     command = "yarn netlify-build"
     functions = "netlify/functions"
     publish = ".next"
-
-[template.environment]
-DATABASE_URL = "Leave blank for now! You will set it in the Environment variables later."
