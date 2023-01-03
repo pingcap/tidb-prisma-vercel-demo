@@ -7,9 +7,9 @@ generator client {
 // and syntax of MySQL 5.7.
 //
 // TiDB currently does not support foreign key constraints. If you need to use the feature of 
-// referential integrity, you can use the application layer implementation of prisma.
+// referential integrity, you can use the application layer implementation of Prisma.
 //
-// Refercene: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/referential-integrity#handling-the-referential-integrity-in-prisma
+// Reference: https://www.prisma.io/docs/concepts/components/prisma-schema/relations/referential-integrity#handling-the-referential-integrity-in-prisma
 // Related Issue [WIP]: https://github.com/pingcap/tidb/issues/18209
 // 
 // More descriptions about MySQL compatibility:
@@ -24,14 +24,16 @@ datasource db {
 // 
 // https://www.prisma.io/docs/concepts/components/prisma-schema/data-model
 
+
 model Author {
-  id          BigInt   @id
-  name        String   @db.VarChar(100)
-  gender      Boolean?
-  birthYear   Int?     @db.SmallInt @map("birth_year")
-  deathYear   Int?     @db.SmallInt @map("death_year")
-  books       BookAuthor[]
-	@@map("authors")
+  id        BigInt       @id
+  name      String       @db.VarChar(100)
+  gender    Boolean?
+  birthYear Int?         @map("birth_year") @db.SmallInt
+  deathYear Int?         @map("death_year") @db.SmallInt
+  books     BookAuthor[]
+
+  @@map("authors")
 }
 
 model BookAuthor {
@@ -41,33 +43,34 @@ model BookAuthor {
   authorId BigInt @map("author_id")
 
   @@id([bookId, authorId])
-	@@map("book_authors")
+  @@map("book_authors")
 }
 
 model Book {
-  id           BigInt     @id
-  title        String     @db.VarChar(100)
-  type         BookType
-  publishedAt  DateTime   @db.DateTime(0) @map("published_at")
-  stock        Int        @default(0)
-  price        Decimal    @default(0.0) @db.Decimal(15, 2)
-  authors      BookAuthor[]
-  ratings      Rating[]
-  orders       Order[]
-	@@map("books")
+  id          BigInt       @id
+  title       String       @db.VarChar(100)
+  type        BookType
+  publishedAt DateTime     @map("published_at") @db.DateTime(0)
+  stock       Int          @default(0)
+  price       Decimal      @default(0.0) @db.Decimal(15, 2)
+  authors     BookAuthor[]
+  ratings     Rating[]
+  orders      Order[]
+
+  @@map("books")
 }
 
 model Order {
-  id          BigInt   @id @default(autoincrement())
-  book        Book     @relation(fields: [bookId], references: [id])
-  bookId      BigInt   @map("book_id")
-  user        User     @relation(fields: [userId], references: [id])
-  userId      BigInt   @map("user_id")
-  quality     Int      @db.TinyInt
-  orderedAt   DateTime @default(now()) @db.DateTime(0) @map("ordered_at")
+  id        BigInt   @id @default(autoincrement())
+  book      Book     @relation(fields: [bookId], references: [id])
+  bookId    BigInt   @map("book_id")
+  user      User     @relation(fields: [userId], references: [id])
+  userId    BigInt   @map("user_id")
+  quality   Int      @db.TinyInt
+  orderedAt DateTime @default(now()) @map("ordered_at") @db.DateTime(0)
 
   @@index([bookId])
-	@@map("orders")
+  @@map("orders")
 }
 
 model Rating {
@@ -76,11 +79,11 @@ model Rating {
   user    User     @relation(fields: [userId], references: [id])
   userId  BigInt   @map("user_id")
   score   Int      @db.TinyInt
-  ratedAt DateTime @default(now()) @db.DateTime(0) @map("rated_at")
+  ratedAt DateTime @default(now()) @map("rated_at") @db.DateTime(0)
 
   @@id([bookId, userId])
   @@unique([bookId, userId], map: "uniq_book_user_idx")
-	@@map("ratings")
+  @@map("ratings")
 }
 
 model User {
@@ -90,11 +93,11 @@ model User {
   ratings  Rating[]
   orders   Order[]
 
-	@@map("users")
+  @@map("users")
 }
 
-// Because special characters cannot be used in the schema definition of the data model.
-// We use `_nbsp_` to represent one space and use `_amp_` to represent `&`.
+// Because special characters cannot be used in the schema definition of the data model,
+// we use `_nbsp_` to represent one space and use `_amp_` to represent `&`.
 
 enum BookType {
   Magazine
@@ -107,5 +110,6 @@ enum BookType {
   Science_nbsp__amp__nbsp_Technology              @map("Science & Technology")
   Kids
   Sports
-	@@map("books_type")
+
+  @@map("books_type")
 }
