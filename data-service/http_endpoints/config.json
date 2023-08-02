@@ -3,7 +3,7 @@
     "name": "book/rating",
     "description": "",
     "method": "DELETE",
-    "endpoint": "/v1/book/rating_dump_pkOZmV_dump_SuCGLU",
+    "endpoint": "/v1/book/rating",
     "data_source": {
       "cluster_id": 1379661944634374075
     },
@@ -22,7 +22,7 @@
     },
     "tag": "Default",
     "batch_operation": 0,
-    "sql_file": "sql/DELETE-v1-book-rating_dump_pkOZmV_dump_SuCGLU.sql",
+    "sql_file": "sql/DELETE-v1-book-rating.sql",
     "type": "sql_endpoint",
     "return_type": "json"
   },
