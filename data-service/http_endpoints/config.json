@@ -14,6 +14,13 @@
         "required": 1,
         "default": "",
         "description": ""
+      },
+      {
+        "name": "book_id",
+        "type": "number",
+        "required": 0,
+        "default": "",
+        "description": ""
       }
     ],
     "settings": {
