@@ -11,7 +11,7 @@
       {
         "name": "user_id",
         "type": "number",
-        "required": 1,
+        "required": 0,
         "default": "",
         "description": ""
       },
@@ -30,67 +30,6 @@
     "tag": "Default",
     "batch_operation": 0,
     "sql_file": "sql/DELETE-v1-book-rating.sql",
-    "type": "sql_endpoint",
-    "return_type": "json"
-  },
-  {
-    "name": "book/[id]",
-    "description": "",
-    "method": "PUT",
-    "endpoint": "/v1/book",
-    "data_source": {
-      "cluster_id": 1379661944634374075
-    },
-    "params": [
-      {
-        "name": "stock",
-        "type": "number",
-        "required": 1,
-        "default": "",
-        "description": ""
-      },
-      {
-        "name": "book_id",
-        "type": "number",
-        "required": 1,
-        "default": "",
-        "description": ""
-      }
-    ],
-    "settings": {
-      "timeout": 5000,
-      "row_limit": 50
-    },
-    "tag": "Default",
-    "batch_operation": 0,
-    "sql_file": "sql/PUT-v1-book.sql",
-    "type": "sql_endpoint",
-    "return_type": "json"
-  },
-  {
-    "name": "book/[id]",
-    "description": "",
-    "method": "GET",
-    "endpoint": "/v1/book",
-    "data_source": {
-      "cluster_id": 1379661944634374075
-    },
-    "params": [
-      {
-        "name": "book_id",
-        "type": "string",
-        "required": 1,
-        "default": "",
-        "description": ""
-      }
-    ],
-    "settings": {
-      "timeout": 5000,
-      "row_limit": 50
-    },
-    "tag": "Default",
-    "batch_operation": 0,
-    "sql_file": "sql/GET-v1-book.sql",
     "type": "sql_endpoint",
     "return_type": "json"
   },
@@ -159,6 +98,67 @@
     "tag": "Default",
     "batch_operation": 0,
     "sql_file": "sql/GET-v1-book-rating.sql",
+    "type": "sql_endpoint",
+    "return_type": "json"
+  },
+  {
+    "name": "book/[id]",
+    "description": "",
+    "method": "PUT",
+    "endpoint": "/v1/book",
+    "data_source": {
+      "cluster_id": 1379661944634374075
+    },
+    "params": [
+      {
+        "name": "stock",
+        "type": "number",
+        "required": 1,
+        "default": "",
+        "description": ""
+      },
+      {
+        "name": "book_id",
+        "type": "number",
+        "required": 1,
+        "default": "",
+        "description": ""
+      }
+    ],
+    "settings": {
+      "timeout": 5000,
+      "row_limit": 50
+    },
+    "tag": "Default",
+    "batch_operation": 0,
+    "sql_file": "sql/PUT-v1-book.sql",
+    "type": "sql_endpoint",
+    "return_type": "json"
+  },
+  {
+    "name": "book/[id]",
+    "description": "",
+    "method": "GET",
+    "endpoint": "/v1/book",
+    "data_source": {
+      "cluster_id": 1379661944634374075
+    },
+    "params": [
+      {
+        "name": "book_id",
+        "type": "string",
+        "required": 1,
+        "default": "",
+        "description": ""
+      }
+    ],
+    "settings": {
+      "timeout": 5000,
+      "row_limit": 50
+    },
+    "tag": "Default",
+    "batch_operation": 0,
+    "sql_file": "sql/GET-v1-book.sql",
     "type": "sql_endpoint",
     "return_type": "json"
   },
