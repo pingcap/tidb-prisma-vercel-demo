@@ -26,13 +26,11 @@ import {
 } from 'lib/http';
 
 const Home: NextPage = () => {
-  const [currentPage, setCurrentPage] = React.useState(1);
   const [homePageQueryData, setHomePageQueryData] =
     useRecoilState(homePageQueryState);
   const [homePageBookSum] = useRecoilState(homePageBookSumState);
 
   const handleClickPagination = (page: number) => {
-    setCurrentPage(page);
     setHomePageQueryData({ ...homePageQueryData, page });
   };
 
@@ -45,10 +43,10 @@ const Home: NextPage = () => {
       </Head>
 
       <CommonLayout>
-        <BookList page={currentPage} pageSize={PAGE_SIZE} />
+        <BookList page={homePageQueryData?.page || 1} pageSize={PAGE_SIZE} />
         <div className='flex justify-center pt-6'>
           <Pagination
-            currentPage={currentPage}
+            currentPage={homePageQueryData?.page || 1}
             pages={Math.round(homePageBookSum / PAGE_SIZE)}
             onClick={handleClickPagination}
           />

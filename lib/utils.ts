@@ -36,3 +36,9 @@ export function isInDesiredForm(str: string) {
   var n = Math.floor(Number(str));
   return n !== Infinity && String(n) === str && n >= 0;
 }
+
+export function upperCaseEachWord(str: string) {
+  return str.replace(/\w\S*/g, (w) =>
+    w.replace(/^\w/, (c) => c.toUpperCase())
+  );
+}

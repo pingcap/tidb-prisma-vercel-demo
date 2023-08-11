@@ -10,6 +10,8 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline';
 
+import BookTypeMenu from 'components/v2/Layout/BookTypeMenu';
+
 export interface HeaderProps {}
 
 export default function Header(props: HeaderProps) {
@@ -24,21 +26,7 @@ export default function Header(props: HeaderProps) {
             >
               <Bars3Icon className='w-6 h-6' />
             </label>
-            <ul
-              tabIndex={0}
-              className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
-            >
-              {/* TODO */}
-              <li>
-                <a>Homepage</a>
-              </li>
-              <li>
-                <a>Portfolio</a>
-              </li>
-              <li>
-                <a>About</a>
-              </li>
-            </ul>
+            <BookTypeMenu />
           </div>
         </div>
         <div className='navbar-center'>

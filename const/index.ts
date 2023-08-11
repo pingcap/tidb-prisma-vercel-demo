@@ -49,3 +49,5 @@ export const starLabels: { [index: string]: string } = {
 };
 
 export const PAGE_SIZE = 6;
+
+export const SORT_VALUE = ['published_at', 'price'];
