@@ -92,7 +92,7 @@ export default function BasicCard(props: BookProps) {
               {type.replaceAll(`_nbsp_`, ` `).replaceAll(`_amp_`, `&`)}
             </Typography>
           )}
-          <Link href={`/book/${id}`}>
+          <Link legacyBehavior href={`/book/${id}`}>
             <Typography variant="h5" component="div" sx={{ cursor: "pointer" }}>
               {title}
             </Typography>

@@ -56,7 +56,7 @@ const BookInfoSection = () => {
       return (
         <>
           <Breadcrumbs aria-label="breadcrumb" sx={{ padding: "1rem 0" }}>
-            <Link href="/">
+            <Link legacyBehavior href="/">
               <Typography
                 sx={{
                   display: "flex",
@@ -151,7 +151,7 @@ const BookInfoSection = () => {
       return (
         <>
           <Breadcrumbs aria-label="breadcrumb" sx={{ padding: "1rem 0" }}>
-            <Link href="/">
+            <Link legacyBehavior href="/">
               <Typography
                 sx={{
                   display: "flex",

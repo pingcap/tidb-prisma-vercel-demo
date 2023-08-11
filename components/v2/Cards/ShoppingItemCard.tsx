@@ -11,8 +11,16 @@ import { currencyFormat } from 'lib/utils';
 import HalfRating from 'components/v2/Rating/HalfRating';
 
 export default function ShoopingItemCard(props: BookProps) {
-  const { id, title, type, price, averageRating, authors, ratings, stock } =
-    props;
+  const {
+    id,
+    title,
+    type,
+    price,
+    averageRating = 0,
+    authors,
+    ratings,
+    stock,
+  } = props;
   const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
 
   const { enqueueSnackbar } = useSnackbar();
@@ -58,7 +66,10 @@ export default function ShoopingItemCard(props: BookProps) {
         />
       </figure>
       <div className='card-body'>
-        <div className='text-sm text-gray-900'>{type}</div>
+        <div className='text-sm text-gray-900'>
+          {' '}
+          {type.replaceAll(`_nbsp_`, ` `).replaceAll(`_amp_`, `&`)}
+        </div>
         <h2 className='card-title'>{title}</h2>
         <p className='font-medium text-gray-900'>
           {authors.map((author) => author.author.name).join(`, `)}
@@ -69,8 +80,8 @@ export default function ShoopingItemCard(props: BookProps) {
             ${currencyFormat(price)}
             <ShoppingCartIcon className='h-6 w-6' />
           </button>
-          <NextLink href={`/book/${id}`}>
-            <a className='btn btn-info'>View Details</a>
+          <NextLink href={`/book/${id}`} className='btn btn-info'>
+            View Details
           </NextLink>
         </div>
       </div>

@@ -135,7 +135,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <Link href="/cart">
+      <Link legacyBehavior href="/cart">
         <MenuItem>Shopping Cart</MenuItem>
       </Link>
       <Divider />
@@ -150,10 +150,10 @@ export default function PrimarySearchAppBar() {
     <>
       <AppBar position="static">
         <Toolbar>
-          <Link href="/">
+          <Link legacyBehavior href="/">
             <MenuBookIcon sx={{ display: { md: "flex" }, mr: 1 }} />
           </Link>
-          <Link href="/">
+          <Link legacyBehavior href="/">
             <Typography
               variant="h6"
               noWrap
@@ -184,7 +184,7 @@ export default function PrimarySearchAppBar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Link href="/cart">
+            <Link legacyBehavior href="/cart">
               <IconButton
                 size="large"
                 aria-label="show 4 new mails"

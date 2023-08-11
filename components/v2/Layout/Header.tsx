@@ -42,20 +42,17 @@ export default function Header(props: HeaderProps) {
           </div>
         </div>
         <div className='navbar-center'>
-          <NextLink href='/'>
-            <a className='btn btn-ghost normal-case text-xl'>
-              <BookOpenIcon className='w-6 h-6' />
-              Bookstore</a>
+          <NextLink href='/' className='btn btn-ghost normal-case text-xl'>
+            <BookOpenIcon className='w-6 h-6' />
+            Bookstore
           </NextLink>
         </div>
         <div className='navbar-end'>
-          <NextLink href='/cart'>
-            <a className='btn btn-ghost btn-circle'>
-              <div className='indicator'>
-                <ShoppingCartIcon className='w-6 h-6' />
-                <span className='badge badge-sm indicator-item'>8</span>
-              </div>
-            </a>
+          <NextLink href='/cart' className='btn btn-ghost btn-circle'>
+            <div className='indicator'>
+              <ShoppingCartIcon className='w-6 h-6' />
+              <span className='badge badge-sm indicator-item'>8</span>
+            </div>
           </NextLink>
 
           {/* <button className='btn btn-ghost btn-circle'>

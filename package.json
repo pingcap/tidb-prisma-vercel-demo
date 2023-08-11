@@ -21,7 +21,7 @@
     "@tailwindcss/typography": "^0.5.9",
     "axios": "^1.1.3",
     "dotenv": "^16.0.3",
-    "next": "12.2.2",
+    "next": "^13.4.13",
     "notistack": "^2.0.5",
     "postcss": "^8.4.27",
     "react": "18.2.0",

@@ -22,9 +22,13 @@ export default function BookList(props: BookListProps) {
       return (
         <>
           {!!homePageBookSum && (
-            <div className='text-sm text-gray-500'>{`${
+            <div className='text-sm text-gray-500 pb-4'>{`${
               pageSize * (page - 1) + 1
-            } ~ ${pageSize * page} of over ${homePageBookSum} results`}</div>
+            } ~ ${
+              pageSize * page > homePageBookSum
+                ? homePageBookSum
+                : pageSize * page
+            } of over ${homePageBookSum} results`}</div>
           )}
           <div className='grid grid-cols-1 gap-x-2 gap-y-10 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8'>
             {bookListLoadable.contents.content.map((book) => (
@@ -35,14 +39,9 @@ export default function BookList(props: BookListProps) {
       );
     case 'loading':
       return (
-        <>
-          {/* <Skeleton sx={{ maxWidth: '10rem', margin: '1rem 0' }} />
-          <div className={styles.bookList}>
-            {Array.from(Array(pageSize)).map((i, idx) => (
-              <BookSekeleton key={idx} />
-            ))}
-          </div> */}
-        </>
+        <div className='flex items-center justify-center'>
+          <span className='loading loading-bars loading-lg'></span>
+        </div>
       );
     case 'hasError':
       throw bookListLoadable.contents;

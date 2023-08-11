@@ -13,6 +13,7 @@ export default function HalfRating(props: HalfRatingProps) {
   const { rating = 0, disabled = false, onChange } = props;
 
   const [value, setValue] = React.useState(rating);
+  const randomId = React.useId();
 
   const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;
@@ -31,26 +32,30 @@ export default function HalfRating(props: HalfRatingProps) {
             {index === 0 && checkedIdx === 0 && !isHalf && (
               <input
                 type='radio'
-                name='rating-9'
+                name={`${randomId}-rating-${index}-hidden`}
                 className='rating-hidden hidden'
-                checked
+                disabled
+                readOnly
+                defaultChecked
               />
             )}
             <input
               type='radio'
-              name='rating-10'
+              name={`${randomId}-rating-${index}-half`}
               className='bg-green-500 mask mask-star-2 mask-half-1'
               checked={index === checkedIdx && isHalf}
               disabled={disabled}
+              readOnly={disabled}
               value={index + 0.5}
               onClick={handleClick}
             />
             <input
               type='radio'
-              name='rating-10'
+              name={`${randomId}-rating-${index}-full`}
               className='bg-green-500 mask mask-star-2 mask-half-2'
               checked={index === checkedIdx && !isHalf}
               disabled={disabled}
+              readOnly={disabled}
               value={index + 1}
               onClick={handleClick}
             />

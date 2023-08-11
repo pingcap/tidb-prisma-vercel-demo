@@ -1,5 +1,5 @@
-import axios from "axios";
-import { BookProps, BookDetailProps, BookRatingsProps } from "const";
+import axios from 'axios';
+import { BookProps, BookDetailProps, BookRatingsProps } from 'const';
 
 export async function fetchBooks(data: {
   page?: number;
@@ -99,7 +99,7 @@ export async function addRatingByBookID(
     score: number;
   }
 ): Promise<{
-  content?: { data: Omit<BookRatingsProps, "user">; message: string };
+  content?: { data: Omit<BookRatingsProps, 'user'>; message: string };
   error?: any;
 }> {
   try {
