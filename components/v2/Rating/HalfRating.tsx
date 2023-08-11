@@ -53,7 +53,7 @@ export default function HalfRating(props: HalfRatingProps) {
               type='radio'
               name={`${randomId}-rating-${index}-full`}
               className='bg-green-500 mask mask-star-2 mask-half-2'
-              checked={index === checkedIdx && !isHalf}
+              checked={index + 1 === checkedIdx && !isHalf}
               disabled={disabled}
               readOnly={disabled}
               value={index + 1}
