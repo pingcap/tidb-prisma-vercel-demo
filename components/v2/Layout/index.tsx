@@ -13,19 +13,21 @@ import Header, { HeaderProps } from 'components/v2/Layout/Header';
 
 export interface CommonLayoutProps {
   children?: any;
-  headers: HeaderProps;
+  headerProps?: HeaderProps;
 }
 
-export default function CommonLayout(props: { children?: any }) {
+export default function CommonLayout(props: CommonLayoutProps) {
+  const { headerProps, children } = props;
+
   return (
     <>
       <div className='min-h-full'>
-        <Header />
+        <Header {...headerProps} />
 
         <main>
           <div className='mx-auto max-w-7xl py-6 px-4'>
             {/* Your content */}
-            {props?.children}
+            {children}
           </div>
         </main>
       </div>

@@ -12,24 +12,30 @@ import { useRecoilState } from 'recoil';
 
 import { calcCartItemSum } from 'lib/utils';
 
-export interface HeaderProps {}
+export interface HeaderProps {
+  hideMenu?: boolean;
+}
 
 export default function Header(props: HeaderProps) {
+  const { hideMenu } = props;
+
   const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
 
   return (
     <>
       <div className='navbar bg-base-100 mx-auto max-w-7xl mt-4 shadow-xl rounded-box'>
         <div className='navbar-start'>
-          <div className='dropdown'>
-            <label
-              tabIndex={0}
-              className='btn btn-ghost btn-circle content-center'
-            >
-              <Bars3Icon className='w-6 h-6' />
-            </label>
-            <BookTypeMenu />
-          </div>
+          {!hideMenu && (
+            <div className='dropdown'>
+              <label
+                tabIndex={0}
+                className='btn btn-ghost btn-circle content-center'
+              >
+                <Bars3Icon className='w-6 h-6' />
+              </label>
+              <BookTypeMenu />
+            </div>
+          )}
         </div>
         <div className='navbar-center'>
           <NextLink href='/' className='btn btn-ghost normal-case text-xl'>
