@@ -2,16 +2,12 @@ import * as React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import {
-  useRecoilState,
-  useRecoilValue,
-  useRecoilValueLoadable,
-  useSetRecoilState,
-} from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import CommonLayout from 'components/v2/Layout';
 import { bookDetailsIdState } from 'atoms';
 import BookInfoSection from 'components/v2/BookDetails/BookInfoSection';
+import BookReviewsSection from 'components/v2/BookDetails/BookReviewsSection';
 
 const Book: NextPage = () => {
   const router = useRouter();
@@ -38,6 +34,7 @@ const Book: NextPage = () => {
         }}
       >
         <BookInfoSection />
+        <BookReviewsSection />
       </CommonLayout>
     </>
   );
