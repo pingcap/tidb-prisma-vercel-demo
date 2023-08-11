@@ -6,7 +6,7 @@ export function Chip(props: any) {
   const { label, onDelete } = props;
 
   return (
-    <div className='badge badge-info gap-2 cursor-default'>
+    <div className='badge badge-ghost gap-2 cursor-default'>
       {label}
       <XMarkIcon
         className='inline-block w-4 h-4 stroke-current cursor-pointer'
@@ -31,7 +31,7 @@ export const FilteredChips = (props: {
     onChange((originData) => ({ ...originData, [key]: '' }));
   };
   return (
-    <div className='flex flex-wrap items-center justify-center gap-2'>
+    <div className='flex flex-wrap items-center justify-start gap-2 pb-4'>
       {data.type && (
         <Chip
           label={`Type: ${data.type

@@ -1,29 +1,14 @@
 import * as React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-
-import {
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-  useRecoilValueLoadable,
-  SetterOrUpdater,
-} from 'recoil';
+import { useRecoilState } from 'recoil';
 import { homePageBookSumState, homePageQueryState } from 'atoms';
-import { homePageQuery } from 'selectors';
-import { XMarkIcon } from '@heroicons/react/24/outline';
 
 import CommonLayout from 'components/v2/Layout';
 import { FilteredChips } from 'components/v2/Chips/FilteredChips';
-import ShoopingItemCard from 'components/v2/Cards/ShoppingItemCard';
 import BookList from 'components/v2/Cards/ShoppingItemCardList';
 import Pagination from 'components/v2/Pagination';
-import { PAGE_SIZE, BookProps } from 'const';
-import {
-  fetchBookDetailsById,
-  fetchBookRatingsById,
-  fetchBooks,
-} from 'lib/http';
+import { PAGE_SIZE } from 'const';
 
 const Home: NextPage = () => {
   const [homePageQueryData, setHomePageQueryData] =
@@ -43,6 +28,12 @@ const Home: NextPage = () => {
       </Head>
 
       <CommonLayout>
+        {(homePageQueryData.sort || homePageQueryData.type) && (
+          <FilteredChips
+            data={homePageQueryData}
+            onChange={setHomePageQueryData}
+          />
+        )}
         <BookList page={homePageQueryData?.page || 1} pageSize={PAGE_SIZE} />
         <div className='flex justify-center pt-6'>
           <Pagination
