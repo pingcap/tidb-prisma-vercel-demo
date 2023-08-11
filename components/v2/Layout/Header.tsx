@@ -2,19 +2,21 @@ import * as React from 'react';
 import NextLink from 'next/link';
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-  XMarkIcon,
   ShoppingCartIcon,
   BookOpenIcon,
-  UserIcon,
 } from '@heroicons/react/24/outline';
 
 import BookTypeMenu from 'components/v2/Layout/BookTypeMenu';
+import { shoppingCartState } from 'atoms';
+import { useRecoilState } from 'recoil';
+
+import { calcCartItemSum } from 'lib/utils';
 
 export interface HeaderProps {}
 
 export default function Header(props: HeaderProps) {
+  const [shoppingCart, setShoppingCart] = useRecoilState(shoppingCartState);
+
   return (
     <>
       <div className='navbar bg-base-100 mx-auto max-w-7xl mt-4 shadow-xl rounded-box'>
@@ -39,7 +41,9 @@ export default function Header(props: HeaderProps) {
           <NextLink href='/cart' className='btn btn-ghost btn-circle'>
             <div className='indicator'>
               <ShoppingCartIcon className='w-6 h-6' />
-              <span className='badge badge-sm indicator-item'>8</span>
+              <span className='badge badge-sm indicator-item'>
+                {calcCartItemSum(shoppingCart)}
+              </span>
             </div>
           </NextLink>
 
