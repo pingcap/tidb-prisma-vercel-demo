@@ -7,6 +7,7 @@ import { SnackbarProvider } from "notistack";
 function DebugObserver(): any {
   const snapshot = useRecoilSnapshot();
   useEffect(() => {
+    if (process.env.NODE_ENV !== "development") return;
     console.debug("The following atoms were modified:");
     for (const node of snapshot.getNodes_UNSTABLE({ isModified: true })) {
       console.debug(node.key, snapshot.getLoadable(node));
