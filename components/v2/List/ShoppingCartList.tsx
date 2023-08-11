@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { InformationCircleIcon } from '@heroicons/react/24/outline';
 
-import {
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-  useRecoilValueLoadable,
-} from 'recoil';
+import { useRecoilState } from 'recoil';
 import { shoppingCartState } from 'atoms';
 import { calcCartItemSum, calcCartItemTotalPrice } from 'lib/utils';
 import ShoppingCartListItem from 'components/v2/List/ShoppingCartListItem';
