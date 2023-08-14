@@ -1,9 +1,10 @@
-import { shoppingCartItemProps } from "const";
+import { shoppingCartItemProps } from 'const';
+// import _ from 'lodash';
 
 export function currencyFormat(num: number | string) {
   return parseFloat(`${num}`)
     .toFixed(2)
-    .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
 
 export function calcCartItemSum(cartItems: shoppingCartItemProps[]) {
@@ -35,4 +36,12 @@ export function roundHalf(num: number) {
 export function isInDesiredForm(str: string) {
   var n = Math.floor(Number(str));
   return n !== Infinity && String(n) === str && n >= 0;
+}
+
+export function upperCaseEachWord(str: string) {
+  return str.replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
+}
+
+export function checkIsValidInteger(str: string) {
+  return /^[0-9]+$/.test(str);
 }
