@@ -66,12 +66,12 @@ export default function ShoopingItemCard(props: BookProps) {
         />
       </figure>
       <div className='card-body'>
-        <div className='text-sm text-gray-900'>
+        <div className='text-sm text-slate-500'>
           {' '}
           {type.replaceAll(`_nbsp_`, ` `).replaceAll(`_amp_`, `&`)}
         </div>
         <h2 className='card-title'>{title}</h2>
-        <p className='font-medium text-gray-900'>
+        <p className='font-medium text-slate-500'>
           {authors.map((author) => author.author.name).join(`, `)}
         </p>
         <HalfRating rating={averageRating} disabled />
