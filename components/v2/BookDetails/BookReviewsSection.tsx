@@ -37,7 +37,9 @@ export default function BookReviewsSection() {
                 </button>
               </div>
               <div className='overflow-x-auto mt-16'>
-                <ReviewsTable content={data.content} bookId={bookDetailsId} />
+                {data?.content?.length > 0 && (
+                  <ReviewsTable content={data.content} bookId={bookDetailsId} />
+                )}
               </div>
             </div>
           </div>
@@ -76,27 +78,39 @@ const ReviewOverview = (props: { content: BookRatingsProps[] }) => {
       <div className='text-sm text-gray-500'>{`${num} global ratings`}</div>
       <StarPercentageBar
         leftText='5 Star'
-        value={(props.content.filter((i) => i.score === 5).length / num) * 100}
+        value={
+          (props.content.filter((i) => i.score === 5).length / num) * 100 || 0
+        }
       />
       <StarPercentageBar
         leftText='4 Star'
-        value={(props.content.filter((i) => i.score === 4).length / num) * 100}
+        value={
+          (props.content.filter((i) => i.score === 4).length / num) * 100 || 0
+        }
       />
       <StarPercentageBar
         leftText='3 Star'
-        value={(props.content.filter((i) => i.score === 3).length / num) * 100}
+        value={
+          (props.content.filter((i) => i.score === 3).length / num) * 100 || 0
+        }
       />
       <StarPercentageBar
         leftText='2 Star'
-        value={(props.content.filter((i) => i.score === 2).length / num) * 100}
+        value={
+          (props.content.filter((i) => i.score === 2).length / num) * 100 || 0
+        }
       />
       <StarPercentageBar
         leftText='1 Star'
-        value={(props.content.filter((i) => i.score === 1).length / num) * 100}
+        value={
+          (props.content.filter((i) => i.score === 1).length / num) * 100 || 0
+        }
       />
       <StarPercentageBar
         leftText='0 Star'
-        value={(props.content.filter((i) => i.score === 0).length / num) * 100}
+        value={
+          (props.content.filter((i) => i.score === 0).length / num) * 100 || 0
+        }
       />
     </div>
   );
