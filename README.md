@@ -10,7 +10,7 @@ You can perform CRUD operations such as viewing book details, adding and deletin
 
 [👉 Click here to visit](https://tidb-prisma-vercel-demo.vercel.app/)
 
-![image](https://user-images.githubusercontent.com/56986964/183592978-42d702eb-b5fc-4285-b081-30a50803fe1a.png)
+![image](https://github.com/pingcap/tidb-prisma-vercel-demo/assets/56986964/2ef5fd7f-9023-45f4-b639-f4ba4ddec157)
 
 ## Deploy on Vercel
 
@@ -33,13 +33,13 @@ You can click the button to quickly deploy this demo if already has an TiDB Clou
 
 You can get the connection details by clicking the `Connect` button.
 
-![image](https://user-images.githubusercontent.com/56986964/183590385-0e688bac-8c4b-4988-ad02-692650b4c5a8.png)
+![image](https://github.com/pingcap/tidb-prisma-vercel-demo/assets/56986964/86e5df8d-0d61-49ca-a1a8-d53f2a3f618c)
 
 Get `User` and `Host` field from the dialog.
 
 > Note: For importing initial data from local, you can set an Allow All traffic filter here by entering an IP address of `0.0.0.0/0`.
 
-![image](https://user-images.githubusercontent.com/56986964/183590950-93fb5778-128b-40e1-ab85-33994bd6f4de.png)
+![image](https://github.com/pingcap/tidb-prisma-vercel-demo/assets/56986964/8d32ed58-4edb-412f-8af8-0e1303cceed9)
 
 Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/bookshop`
 
