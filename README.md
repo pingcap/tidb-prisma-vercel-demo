@@ -1,4 +1,4 @@
-# Bookshop Demo
+# Bookshop Demoxx
 
 Bookshop is a virtual online bookstore application through which you can find books of various categories and rate the books.
 
