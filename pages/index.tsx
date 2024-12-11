@@ -1,14 +1,18 @@
 import * as React from 'react';
-import type { NextPage } from 'next';
-import Head from 'next/head';
-import { useRecoilState } from 'recoil';
+
 import { homePageBookSumState, homePageQueryState } from 'atoms';
 
 import CommonLayout from 'components/v2/Layout';
 import { FilteredChips } from 'components/v2/Chips/FilteredChips';
-import BookList from 'components/v2/Cards/ShoppingItemCardList';
-import Pagination from 'components/v2/Pagination';
+import Head from 'next/head';
+import type { NextPage } from 'next';
 import { PAGE_SIZE } from 'const';
+import Pagination from 'components/v2/Pagination';
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
+import { useRecoilState } from 'recoil';
+
+const BookList = dynamic(import('components/v2/Cards/ShoppingItemCardList'), { ssr: false })
 
 const Home: NextPage = () => {
   const [homePageQueryData, setHomePageQueryData] =
@@ -34,7 +38,9 @@ const Home: NextPage = () => {
             onChange={setHomePageQueryData}
           />
         )}
-        <BookList page={homePageQueryData?.page || 1} pageSize={PAGE_SIZE} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <BookList page={homePageQueryData?.page || 1} pageSize={PAGE_SIZE} />
+        </Suspense>
         <div className='flex justify-center pt-6'>
           <Pagination
             currentPage={homePageQueryData?.page || 1}
