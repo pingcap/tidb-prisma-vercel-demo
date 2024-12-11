@@ -1,9 +1,10 @@
 import * as React from 'react';
 
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
+
+import ShoopingItemCard from 'components/v2/Cards/ShoppingItemCard';
 import { homePageBookSumState } from 'atoms';
 import { homePageQuery } from 'selectors';
-import ShoopingItemCard from 'components/v2/Cards/ShoppingItemCard';
 
 export interface BookListProps {
   page: number;
@@ -12,10 +13,8 @@ export interface BookListProps {
 
 export default function BookList(props: BookListProps) {
   const { page, pageSize } = props;
-  // const bookListLoadable = useRecoilValueLoadable(currentPageIdxQuery);
   const bookListLoadable = useRecoilValueLoadable(homePageQuery);
-  const [homePageBookSum, setHomePageBookSum] =
-    useRecoilState(homePageBookSumState);
+  const [homePageBookSum, setHomePageBookSum] = useRecoilState(homePageBookSumState);
   switch (bookListLoadable.state) {
     case 'hasValue':
       setHomePageBookSum(bookListLoadable.contents.total);
@@ -31,7 +30,7 @@ export default function BookList(props: BookListProps) {
             } of over ${homePageBookSum} results`}</div>
           )}
           <div className='grid grid-cols-1 gap-x-2 gap-y-10 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 xl:gap-x-8'>
-            {bookListLoadable.contents.content.map((book) => (
+            {bookListLoadable.contents?.content?.map((book) => (
               <ShoopingItemCard key={book.id} {...book} />
             ))}
           </div>
