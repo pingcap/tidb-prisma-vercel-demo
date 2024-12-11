@@ -87,13 +87,13 @@ mysql -h gateway01.us-west-2.prod.aws.tidbcloud.com -P 4000 -u user -p
 ```
 
 ```
-mysql> create database test_bookshop;
+mysql> create database tidb_labs_bookshop;
 ```
 
 ### Set environment variables
 
 ```bash
-export DATABASE_URL=mysql://user:pass@gateway01.us-west-2.prod.aws.tidbcloud.com:4000/test_bookshop
+export DATABASE_URL=mysql://user:pass@gateway01.us-west-2.prod.aws.tidbcloud.com:4000/tidb_labs_bookshop
 ```
 
 ### Build the project
