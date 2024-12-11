@@ -11,7 +11,7 @@ const buyBookHandler = async (
         const result = await buyBook(req);
         res.status(result.status).json({
             message: result.message,
-            data: result
+            data: result.data
         });
     } catch (err:any) {
       console.error(err)
@@ -31,7 +31,7 @@ async function buyBook(req:NextApiRequest): Promise<any> {
     if (typeof req.query.id !== 'string' && typeof req.query.id !== 'number') {
         throw new Error('Invalid parameter `id`.');
     }
-    const bookId = BigInt(req.query.id);
+    const bookId = Number(req.query.id);
 
     // Get quality;
     if (typeof req.query.quality !== 'string' && typeof req.query.quality !== 'number') {
@@ -46,12 +46,12 @@ async function buyBook(req:NextApiRequest): Promise<any> {
     if (typeof req.query.userId !== 'string' && typeof req.query.userId !== 'number') {
         throw new Error('Invalid parameter `userId`.');
     }
-    const userId = BigInt(req.query.userId);
+    const userId = Number(req.query.userId);
 
     try {
-        const result = await prisma.$transaction(async prisma => {
+        const result = await prisma.$transaction(async tx => {
             // Found the book that the user want to purchase.
-            const book = await prisma.book.findFirst({
+            const book = await tx.book.findFirst({
                 where: {
                     id: bookId
                 },    
@@ -69,7 +69,7 @@ async function buyBook(req:NextApiRequest): Promise<any> {
 
             // Cost the user balance to buy the book.
             const cost = book?.price.mul(quality).toNumber();
-            const purchaser = await prisma.user.update({
+            const purchaser = await tx.user.update({
                 data: {
                     balance: {
                         decrement: cost,
@@ -84,7 +84,7 @@ async function buyBook(req:NextApiRequest): Promise<any> {
             }
 
             // Update the book stock.
-            const newBook = await prisma.book.update({
+            const newBook = await tx.book.update({
                 data: {
                     stock: {
                         decrement: 1,
@@ -99,7 +99,7 @@ async function buyBook(req:NextApiRequest): Promise<any> {
             }
 
             // Generate a new order to record.
-            const order = prisma.order.create({
+            const order = await tx.order.create({
                 data: {
                     userId: userId,
                     bookId: bookId,
@@ -113,7 +113,7 @@ async function buyBook(req:NextApiRequest): Promise<any> {
                 bookTitle: book.title,
                 cost: cost,
                 remaining: purchaser.balance,
-                orderId: order
+                orderId: order.id
             };
         });
         return {

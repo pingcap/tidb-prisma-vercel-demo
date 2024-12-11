@@ -29,7 +29,7 @@ async function getOrderDetail(req: NextApiRequest) {
     if (typeof req.query.id !== 'string' && typeof req.query.id !== 'number') {
         throw new Error('Invalid parameter `id`.');
     }
-    const orderId = BigInt(req.query.id);
+    const orderId = Number(req.query.id);
 
     // Get record by unique identifier.
     // Reference: https://www.prisma.io/docs/concepts/components/prisma-client/crud#get-record-by-compound-id-or-compound-unique-identifier

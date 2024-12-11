@@ -55,7 +55,7 @@ function parseOrderListQuery(query: any, sorting: boolean = false, paging: boole
   q.where = {};
   // TODO: get user ID for context.
   if (typeof query.userId === 'string') {
-    q.where.userId = BigInt(query.userId);
+    q.where.userId = Number(query.userId);
   } else {
     throw new Error('Must provide userId.');
   }

@@ -10,9 +10,6 @@ declare global {
   // allow global `var` declarations
   // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined
-  interface BigInt {
-    toJSON(): string;
-  }
 }
 
 let prisma: PrismaClient
@@ -43,10 +40,6 @@ if (process.env.NODE_ENV === 'production') {
     });
   }
   prisma = global.prisma
-}
-
-BigInt.prototype.toJSON = function() {       
-  return this.toString()
 }
 
 export default prisma

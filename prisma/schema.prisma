@@ -18,14 +18,13 @@ generator client {
 datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
 }
 
 // 
 // https://www.prisma.io/docs/concepts/components/prisma-schema/data-model
 
 model Author {
-  id          BigInt   @id
+  id          Int      @id @default(autoincrement())
   name        String   @db.VarChar(100)
   gender      Boolean?
   birthYear   Int?     @db.SmallInt @map("birth_year")
@@ -36,16 +35,16 @@ model Author {
 
 model BookAuthor {
   book     Book   @relation(fields: [bookId], references: [id])
-  bookId   BigInt @map("book_id")
+  bookId   Int  @map("book_id")
   author   Author @relation(fields: [authorId], references: [id])
-  authorId BigInt @map("author_id")
+  authorId Int @map("author_id")
 
   @@id([bookId, authorId])
 	@@map("book_authors")
 }
 
 model Book {
-  id           BigInt     @id
+  id           Int        @id @default(autoincrement())
   title        String     @db.VarChar(100)
   type         BookType
   publishedAt  DateTime   @db.DateTime(0) @map("published_at")
@@ -58,11 +57,11 @@ model Book {
 }
 
 model Order {
-  id          BigInt   @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   book        Book     @relation(fields: [bookId], references: [id])
-  bookId      BigInt   @map("book_id")
+  bookId      Int      @map("book_id")
   user        User     @relation(fields: [userId], references: [id])
-  userId      BigInt   @map("user_id")
+  userId      Int      @map("user_id")
   quality     Int      @db.TinyInt
   orderedAt   DateTime @default(now()) @db.DateTime(0) @map("ordered_at")
 
@@ -72,9 +71,9 @@ model Order {
 
 model Rating {
   book    Book     @relation(fields: [bookId], references: [id])
-  bookId  BigInt   @map("book_id")
+  bookId  Int      @map("book_id")
   user    User     @relation(fields: [userId], references: [id])
-  userId  BigInt   @map("user_id")
+  userId  Int      @map("user_id")
   score   Int      @db.TinyInt
   ratedAt DateTime @default(now()) @db.DateTime(0) @map("rated_at")
 
@@ -84,7 +83,7 @@ model Rating {
 }
 
 model User {
-  id       BigInt   @id
+  id       Int      @id @default(autoincrement())
   balance  Decimal  @default(0.0) @db.Decimal(15, 2)
   nickname String   @unique(map: "nickname") @db.VarChar(100)
   ratings  Rating[]
