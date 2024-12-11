@@ -41,7 +41,7 @@ async function getBookDetail(req: NextApiRequest) {
     if (typeof req.query.id !== 'string' && typeof req.query.id !== 'number') {
         throw new Error('Invalid parameter `id`.');
     }
-    const bookId = BigInt(req.query.id);
+    const bookId = Number(req.query.id);
 
     // Get record by unique identifier.
     // Reference: https://www.prisma.io/docs/concepts/components/prisma-client/crud#get-record-by-compound-id-or-compound-unique-identifier
@@ -73,7 +73,7 @@ async function updateBookDetail(req: NextApiRequest, res: NextApiResponse<any>) 
     if (typeof req.query.id !== 'string' && typeof req.query.id !== 'number') {
         throw new Error('Invalid parameter `id`.');
     }
-    const bookId = BigInt(req.query.id);
+    const bookId = Number(req.query.id);
 
     if (req.body == null || typeof req.body !== 'object') {
         throw new Error('Invalid parameters.');

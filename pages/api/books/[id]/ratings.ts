@@ -46,7 +46,7 @@ async function getBookRatings(req: NextApiRequest) {
     if (typeof req.query.id !== 'string' && typeof req.query.id !== 'number') {
         throw new Error('Invalid parameter `id`.');
     }
-    const bookId = BigInt(req.query.id);
+    const bookId = Number(req.query.id);
 
     // Querying with joins. (Many to one relation)
     const ratings: any[] = await prisma.rating.findMany({
@@ -83,7 +83,7 @@ async function addBookRating(req: NextApiRequest, res: NextApiResponse<any>) {
     if (typeof req.query.id !== 'string' && typeof req.query.id !== 'number') {
         throw new Error('Invalid parameter `id`.');
     }
-    const bookId = BigInt(req.query.id);
+    const bookId = Number(req.query.id);
     
     // Get Score.
     if (typeof req.body.score !== 'number') {
@@ -140,13 +140,13 @@ async function removeBookRating(req: NextApiRequest, res: NextApiResponse<any>) 
     if (typeof req.query.id !== 'string' && typeof req.query.id !== 'number') {
         throw new Error('Invalid parameter `id`.');
     }
-    const bookId = BigInt(req.query.id);
+    const bookId = Number(req.query.id);
     
     // Get userID;
     if (typeof req.query.userId !== 'string' && typeof req.query.userId !== 'number') {
         throw new Error('Parameter `userId` must be provided.');
     }
-    let userId = BigInt(req.query.userId);;
+    let userId = Number(req.query.userId);;
 
     // Delete a single rating record.
     // 
