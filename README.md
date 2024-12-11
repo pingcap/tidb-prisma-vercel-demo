@@ -51,6 +51,67 @@ Your `DATABASE_URL` should look like `mysql://<User>:<Password>@<Host>:4000/book
 
 </details>
 
+## Deploy on AWS Linux
+
+### Install git and nodejs pkgs
+
+```bash
+sudo yum install -y git
+
+# Ref: https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash;
+source ~/.bashrc;
+nvm install --lts;
+node -e "console.log('Running Node.js ' + process.version)"
+```
+
+### Clone the repository
+
+```bash
+git clone https://github.com/pingcap/tidb-prisma-vercel-demo.git;
+cd tidb-prisma-vercel-demo;
+```
+
+### Install dependencies
+
+```bash
+corepack enable;
+corepack yarn install;
+yarn;
+```
+
+### Connect to TiDB Cloud and create a database
+
+```bash
+mysql -h gateway01.us-west-2.prod.aws.tidbcloud.com -P 4000 -u user -p
+```
+
+```
+mysql> create database test_bookshop;
+```
+
+### Set environment variables
+
+```bash
+export DATABASE_URL=mysql://user:pass@gateway01.us-west-2.prod.aws.tidbcloud.com:4000/test_bookshop
+```
+
+### Build the project
+
+```bash
+yarn run prisma:deploy && yarn run setup && yarn run build
+```
+
+### Start the server
+
+```bash
+yarn start
+```
+
+### Open the browser
+
+Open the browser and visit `http://<ip>:3000`.
+
 ## 📖 Development Reference
 
 ### Prisma
